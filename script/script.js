@@ -23,3 +23,5 @@ console.log(discountTextField);
 
 const totalPrice = modalForm.querySelector('.form__total-info__sum');
 console.log(totalPrice);
+
+const createRow = () => { }
