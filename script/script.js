@@ -1,69 +1,65 @@
 'use strict';
-
+/*
 const modalTitles = document.querySelectorAll('.modal__title');
 
 const productId = document.querySelector('.modal__title-id');
-// console.log(productId);
 
 const modalCloseBtn = document.querySelector('.modal__close');
-// console.log(modalCloseBtn);
 
 const modalForm = document.querySelector('.modal__form');
 
 const discountCheckbox = modalForm.querySelector('.box-discount__input-check');
 
 const discountTextField = modalForm.querySelector('#discount');
-// console.log(discountTextField);
 
 const totalPrice = modalForm.querySelector('.form__total-info__sum');
+*/
 
 const table = document.querySelector('.table__content-body');
 
-const tableRow = document.querySelectorAll('.table__content-row');
-console.log(tableRow);
+const getGoods = async () => {
+    const res = await fetch('/goods.json');
+    const data = await res.json();
 
-const tableColumn = document.querySelectorAll('.table__content-column');
-console.log(tableColumn);
+    return data;
+};
 
+const createTd = (value, className) => {
+    const td = document.createElement('td');
+    td.className = className;
+    td.textContent = value;
 
-const createRow = (classElem) => {
-    goods.forEach(element => {
-
-    });
-    const listRow = createElement('tr', {
-        className: 'table__content-row',
-    });
-    const listitem = createElement('td', {
-        className: classElem,
-    });
-    listRow.append(listitem);
+    return td;
 }
 
+const createRow = (good) => {
+    const row = document.createElement('tr');
+    row.className = 'table__content-row';
 
-{/* <tr class="table__content-row">
-    <td class="table__content-column table__content-column-first">246016548</td>
-                            <td class="table__content-column table__content-column-second">Навигационная система
-                                Soundmax</td>
-                            <td class="table__content-column table__content-column-third">Техника для дома</td>
-                            <td class="table__content-column table__content-column-fourth">шт</td>
-                            <td class="table__content-column table__content-column-fifth">5</td>
-                            <td class="table__content-column table__content-column-sixth">$100</td>
-                            <td class="table__content-column table__content-column-seventh">$500</td>
-                            <td class="table__content-column table__content-column-eighth">
-                                <button class="eighth-column_icon eighth-column_icon-img"></button>
-                                <button class="eighth-column_icon eighth-column_icon-edit"></button>
-                                <button class="eighth-column_icon eighth-column_icon-del"></button>
-                            </td>
-</tr> */}
+    const tdId = createTd(good.id, 'table__content-column-first');
+    const tdTitle = createTd(good.title, 'table__content-column-second');
+    const tdPrice = createTd(good.price, 'table__content-column-sixth');
+    const tdDescription = createTd(good.description, 'table__content-column-third');
+    const tdCategory = createTd(good.category, 'table__content-column-third');
+    const tdDiscont = createTd(good.discont, 'table__content-column-fifth');
+    const tdCount = createTd(good.count, 'table__content-column-fifth');
+    const tdUnits = createTd(good.units, 'table__content-column-fourth');
+    const tdImageSmall = createTd(good.images.small, 'box__img-img');
+    const tdImageBig = createTd(good.images.big, 'box__img-img');
 
-/*const tr = document.createElement("tr");
-  tr.classList.add("list-product__tr");
-  tr.dataset.pic = image;
-  tr.dataset.id = id;
-  tr.insertAdjacentHTML(
-    "afterbegin",
-    `
-      <td class=list-product__td>${id}</td>
-      <td class=list-product__td>${title}</td>
-      <td class=list-product__td>${category}</td>
-*/
+    row.append(tdId, tdTitle, tdPrice, tdDescription, tdCategory, tdDiscont, tdCount, tdUnits, tdImageSmall, tdImageBig);
+    return row;
+};
+
+const assembler = async () => {
+    const goods = await getGoods();
+
+    for (let i = 0; i < goods.length; i++) {
+        const row = createRow(goods[i]);
+        console.log(row);
+
+        table.append(row);
+    };
+};
+
+assembler();
