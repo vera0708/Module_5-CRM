@@ -258,49 +258,49 @@ ul {
     border-bottom: 1px solid #D9D5EC;
 }
 
-.table__content__first-column {
+.table__content-column-first {
     display: flex;
     width: 78px;
     justify-content: flex-start;
 }
 
-.table__content__second-column {
+.table__content-column-second {
     display: flex;
     width: 286px;
     justify-content: flex-start;
 }
 
-.table__content__third-column {
+.table__content-column-third {
     display: flex;
     width: 160px;
     justify-content: flex-start;
 }
 
-.table__content__fourth-column {
+.table__content-column-fourth {
     display: flex;
     width: 56px;
     justify-content: center;
 }
 
-.table__content__fifth-column {
+.table__content-column-fifth {
     display: flex;
     width: 91px;
     justify-content: center;
 }
 
-.table__content__sixth-column {
+.table__content-column-sixth {
     display: flex;
     width: 80px;
     justify-content: end;
 }
 
-.table__content__seventh-column {
+.table__content-column-seventh {
     display: flex;
     width: 80px;
     justify-content: end;
 }
 
-.table__content__eighth-column {
+.table__content-column-eighth {
     display: flex;
     width: 135px;
     justify-content: center;
