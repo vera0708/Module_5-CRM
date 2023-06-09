@@ -51,7 +51,7 @@ const createRow = (good) => {
     return row;
 };
 
-const assembler = async () => {
+const renderGoods = async () => {
     const goods = await getGoods();
 
     for (let i = 0; i < goods.length; i++) {
@@ -61,5 +61,4 @@ const assembler = async () => {
         table.append(row);
     };
 };
-
-assembler();
+renderGoods();
