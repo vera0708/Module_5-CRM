@@ -3,13 +3,25 @@
     inset: 0;
     display: flex;
     padding: 20px;
+    z-index: 1;
+    background-color: rgba(0, 0, 0, 0.6);
+    transition: 0.3s ease-in-out;
+    height: 100%;
+    visibility: hidden;
+    opacity: 0;
 }
 
-.modal_active {
-    display: none;
+.modal.is-visible {
+    opacity: 1;
+    visibility: visible;
 }
 
-.modal__container {
+.modal.is-visible .form {
+    opacity: 1;
+    top: 40px;
+}
+
+.modal__form {
     position: relative;
     flex-basis: 792px;
     padding: 32px 106px 39px 106px;
@@ -320,6 +332,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    visibility: hidden;
 }
 
 .modal-error__text {
