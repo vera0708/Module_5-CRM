@@ -72,29 +72,33 @@ const goods = [
 */
     const table = document.querySelector('.table__content-body');
     const btnAddGood = document.querySelector('.table__button-submit');
-    console.log(btnAddGood);
+    const btnDelGood = document.querySelectorAll('.eighth-column_icon-del');
+    console.log(btnDelGood);
 
     btnAddGood.addEventListener('click', () => {
         modal.classList.add('is-visible');
     });
 
-    modalForm.addEventListener('click', (eve) => {
-        eve.stopPropagation();
+    modal.addEventListener('click', (eve) => {
+        const target = eve.target;
+        if (target === modal ||
+            target.closest('.modal__close')) {
+            modal.classList.remove('is-visible');
+        };
     });
 
-    modalCloseBtn.addEventListener('click', () => {
-        modal.classList.remove('is-visible');
-    });
-
-    modal.addEventListener('click', () => {
-        modal.classList.remove('is-visible');
-    });
-
+    /*
+ btnDelGood.addEventListener('click', (e) => {
+ const target = e.target;
+ if (target=== btnDelGood) {
+     target.closest('.table__content-row').remove();
+ };
+});
+*/
     const createTd = (value, className) => {
         const td = document.createElement('td');
         td.className = className;
         td.textContent = value;
-
         return td;
     }
 
@@ -110,10 +114,27 @@ const goods = [
         const tdDiscont = createTd(good.discont, 'table__content-column-fifth');
         const tdCount = createTd(good.count, 'table__content-column-fifth');
         const tdUnits = createTd(good.units, 'table__content-column-fourth');
-        const tdImageSmall = createTd(good.images.small, 'box__img-img');
-        const tdImageBig = createTd(good.images.big, 'box__img-img');
+        /* const tdImageSmall = createTd(good.images.small, 'box__img-img');
+         const tdImageBig = createTd(good.images.big, 'box__img-img');
+ */
+        const tdDel = document.createElement('td');
+        tdDel.classList.add('delete');
+        tdDel.style.width = '50px';
+        const btnDel = document.createElement('button');
+        btnDel.classList.add('eighth-column_icon-del');
+        tdDel.append(btnDel);
 
-        row.append(tdId, tdTitle, tdPrice, tdDescription, tdCategory, tdDiscont, tdCount, tdUnits, tdImageSmall, tdImageBig);
+        row.append(tdId,
+            tdTitle,
+            tdPrice,
+            tdDescription,
+            tdCategory,
+            tdDiscont,
+            tdCount,
+            tdUnits,
+            tdDel,
+            /* tdImageSmall, tdImageBig,*/
+        );
         return row;
     };
 
@@ -127,10 +148,8 @@ const goods = [
 
     /*const init = (selectorApp) => {
         const app = document.querySelector(selectorApp);
-   
-        const modal = createModal();
+           const modal = createModal();
     }
-
-    window.goodShopInit = init;
+     window.goodShopInit = init;
     */
 }
