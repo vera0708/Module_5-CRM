@@ -9,10 +9,26 @@ const goods = [
         "category": "mobile-phone",
         "discont": false,
         "count": 3,
+        "cost": 81000,
         "units": "шт",
         "images": {
             "small": "img/smrtxiaomi11t-m.jpg",
             "big": "img/smrtxiaomi11t-b.jpg"
+        }
+    },
+    {
+        "id": 937295527,
+        "title": "Настольная игра “На 4-х ногах”",
+        "price": 14,
+        "description": "Настольная игра является хорошим подарком который используется всёй семьей. В процессе игры ее помощью вы сможете обеспечить хорошее настроение и времяпровождение с друзьями.",
+        "category": "Настольные игры",
+        "discont": false,
+        "count": 12,
+        "cost": 168,
+        "units": "шт",
+        "images": {
+            "small": "img/lan_proconnect43-3-25.jpg",
+            "big": "img/lan_proconnect43-3-25-b.jpg"
         }
     },
     {
@@ -23,6 +39,7 @@ const goods = [
         "category": "toys",
         "discont": 5,
         "count": 1,
+        "cost": 4000,
         "units": "шт",
         "images": {
             "small": "img/cheetancar-m.jpg",
@@ -37,6 +54,7 @@ const goods = [
         "category": "tv-box",
         "discont": 15,
         "count": 4,
+        "cost": 49600,
         "units": "шт",
         "images": {
             "small": "img/tvboxmecool-m.jpg",
@@ -51,29 +69,27 @@ const goods = [
         "category": "cables",
         "discont": false,
         "count": 420,
+        "cost": 9240,
         "units": "v",
         "images": {
             "small": "img/lan_proconnect43-3-25.jpg",
             "big": "img/lan_proconnect43-3-25-b.jpg"
         }
-    }
+    },
 ];
 
 {
     const modal = document.querySelector('.modal');
     const modalForm = document.querySelector('.modal__form');
     const modalCloseBtn = document.querySelector('.modal__close');
-    /*
-    const modalTitles = document.querySelectorAll('.modal__title');
-    const productId = document.querySelector('.modal__title-id');
-    const discountCheckbox = modalForm.querySelector('.box-discount__input-check');
-    const discountTextField = modalForm.querySelector('#discount');
-    const totalPrice = modalForm.querySelector('.form__total-info__sum');
-*/
-    const table = document.querySelector('.table__content-body');
+    /*  const modalTitles = document.querySelectorAll('.modal__title');
+        const productId = document.querySelector('.modal__title-id');
+        const discountCheckbox = modalForm.querySelector('.box-discount__input-check');
+        const discountTextField = modalForm.querySelector('#discount');
+        const totalPrice = modalForm.querySelector('.form__total-info__sum');
+    */
+    const tablebody = document.querySelector('.table__content-body');
     const btnAddGood = document.querySelector('.table__button-submit');
-    const btnDelGood = document.querySelectorAll('.eighth-column_icon-del');
-    console.log(btnDelGood);
 
     btnAddGood.addEventListener('click', () => {
         modal.classList.add('is-visible');
@@ -87,14 +103,42 @@ const goods = [
         };
     });
 
-    /*
- btnDelGood.addEventListener('click', (e) => {
- const target = e.target;
- if (target=== btnDelGood) {
-     target.closest('.table__content-row').remove();
- };
-});
-*/
+    const createTh = (value, className) => {
+        const td = document.createElement('th');
+        console.log(value);
+        td.className = className;
+        td.textContent = value;
+
+        return th;
+    }
+
+    const createTable = () => {
+        const table = document.createElement('table');
+        table.classList.add('table__content');
+
+        const thead = document.createElement('thead');
+        table.classList.add('table__content');
+
+        const tr = document.createElement('tr');
+        tr.className = 'table__content-row';
+
+        const thId = createTh('ID', 'table__content-column-first');
+        const thTitle = createTh('Наименование', 'table__content-column-second');
+        const thCategory = createTh('Категория', 'table__content-column-third');
+        const thUnits = createTh('Ед/изм', 'table__content-column-fourth');
+        const thCount = createTh('Количество', 'table__content-column-fifth');
+        const thPrice = createTd('Цена', 'table__content-column-sixth');
+        const thCost = createTh('ИТОГ', 'table__content-column-seventh');
+        const thIcons = createTh('', 'table__content-column-eighth');
+        tr.append(thId, thTitle, thCategory, thUnits, thCount, thPrice, thCost, thIcons);
+
+        const tbody = document.createElement('tbody');
+        tbody.classList.add('table__content-body');
+        table.append(thead, tbody);
+        table.tbody = tbody;
+        return table;
+    };
+
     const createTd = (value, className) => {
         const td = document.createElement('td');
         td.className = className;
@@ -108,33 +152,25 @@ const goods = [
 
         const tdId = createTd(good.id, 'table__content-column-first');
         const tdTitle = createTd(good.title, 'table__content-column-second');
-        const tdPrice = createTd(good.price, 'table__content-column-sixth');
-        const tdDescription = createTd(good.description, 'table__content-column-third');
         const tdCategory = createTd(good.category, 'table__content-column-third');
-        const tdDiscont = createTd(good.discont, 'table__content-column-fifth');
-        const tdCount = createTd(good.count, 'table__content-column-fifth');
         const tdUnits = createTd(good.units, 'table__content-column-fourth');
-        /* const tdImageSmall = createTd(good.images.small, 'box__img-img');
-         const tdImageBig = createTd(good.images.big, 'box__img-img');
- */
-        const tdDel = document.createElement('td');
-        tdDel.classList.add('delete');
-        tdDel.style.width = '50px';
-        const btnDel = document.createElement('button');
-        btnDel.classList.add('eighth-column_icon-del');
-        tdDel.append(btnDel);
+        const tdCount = createTd(good.count, 'table__content-column-fifth');
+        const tdPrice = createTd(good.price, 'table__content-column-sixth');
+        const tdCost = createTd(good.cost, 'table__content-column-seventh');
 
-        row.append(tdId,
-            tdTitle,
-            tdPrice,
-            tdDescription,
-            tdCategory,
-            tdDiscont,
-            tdCount,
-            tdUnits,
-            tdDel,
-            /* tdImageSmall, tdImageBig,*/
-        );
+        const tdIcons = document.createElement('td');
+        tdIcons.classList.add('table__content-column-eighth');
+        const btnNoImg = document.createElement('button');
+        btnNoImg.classList.add('eighth-column_icon', 'eighth-column_icon-no-img');
+        const btnImg = document.createElement('button');
+        btnImg.classList.add('eighth-column_icon', 'eighth-column_icon-img');
+        const btnEdit = document.createElement('button');
+        btnEdit.classList.add('eighth-column_icon', 'eighth-column_icon-edit');
+        const btnDel = document.createElement('button');
+        btnDel.classList.add('eighth-column_icon', 'eighth-column_icon-del');
+        tdIcons.append(btnImg, btnEdit, btnDel);
+
+        row.append(tdId, tdTitle, tdCategory, tdUnits, tdCount, tdPrice, tdCost, tdIcons,);
         return row;
     };
 
@@ -142,10 +178,21 @@ const goods = [
         const allRow = goods.map(createRow);
         table.append(...allRow);
         return allRow;
-    }
+    };
 
-    const allRow = renderGoods(table, goods);
+    const table = createTable();
+    renderGoods(table, goods);
+    // const allRow = renderGoods(table, goods);
+    /*  const btnDelGood = document.querySelectorAll('.eighth-column_icon-del');
+    console.log(btnDelGood);
 
+ btnDelGood.addEventListener('click', (e) => {
+ const target = e.target;
+ if (target=== btnDelGood) {
+     target.closest('.table__content-row').remove();
+ };
+});
+*/
     /*const init = (selectorApp) => {
         const app = document.querySelector(selectorApp);
            const modal = createModal();
