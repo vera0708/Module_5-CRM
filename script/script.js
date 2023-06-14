@@ -88,7 +88,8 @@ const goods = [
         const discountTextField = modalForm.querySelector('#discount');
         const totalPrice = modalForm.querySelector('.form__total-info__sum');
     */
-    const tablebody = document.querySelector('.table__content-body');
+    const tableComplete = document.querySelector('.table__complete');
+    console.log(tableComplete);
     const btnAddGood = document.querySelector('.table__button-submit');
 
     btnAddGood.addEventListener('click', () => {
@@ -104,11 +105,10 @@ const goods = [
     });
 
     const createTh = (value, className) => {
-        const td = document.createElement('th');
+        const th = document.createElement('th');
         console.log(value);
-        td.className = className;
-        td.textContent = value;
-
+        th.className = className;
+        th.textContent = value;
         return th;
     }
 
@@ -117,7 +117,7 @@ const goods = [
         table.classList.add('table__content');
 
         const thead = document.createElement('thead');
-        table.classList.add('table__content');
+        thead.classList.add('table__content-head');
 
         const tr = document.createElement('tr');
         tr.className = 'table__content-row';
@@ -131,6 +131,8 @@ const goods = [
         const thCost = createTh('ИТОГ', 'table__content-column-seventh');
         const thIcons = createTh('', 'table__content-column-eighth');
         tr.append(thId, thTitle, thCategory, thUnits, thCount, thPrice, thCost, thIcons);
+
+        thead.append(tr);
 
         const tbody = document.createElement('tbody');
         tbody.classList.add('table__content-body');
@@ -182,17 +184,18 @@ const goods = [
 
     const table = createTable();
     renderGoods(table, goods);
-    // const allRow = renderGoods(table, goods);
-    /*  const btnDelGood = document.querySelectorAll('.eighth-column_icon-del');
-    console.log(btnDelGood);
 
- btnDelGood.addEventListener('click', (e) => {
- const target = e.target;
- if (target=== btnDelGood) {
-     target.closest('.table__content-row').remove();
- };
-});
-*/
+    tableComplete.after(table);
+    // const allRow = renderGoods(table, goods);
+    const btnDelGood = document.querySelectorAll('.eighth-column_icon-del');
+
+    table.addEventListener('click', (e) => {
+        const target = e.target;
+        if (target.closest('.eighth-column_icon-del')) {
+            target.closest('.table__content-row').remove();
+        };
+    });
+
     /*const init = (selectorApp) => {
         const app = document.querySelector(selectorApp);
            const modal = createModal();
