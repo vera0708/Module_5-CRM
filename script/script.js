@@ -79,15 +79,6 @@ const goods = [
 ];
 
 {
-    const modal = document.querySelector('.modal');
-    const modalForm = document.querySelector('.modal__form');
-    const modalCloseBtn = document.querySelector('.modal__close');
-    /*  const modalTitles = document.querySelectorAll('.modal__title');
-        const productId = document.querySelector('.modal__title-id');
-        const discountCheckbox = modalForm.querySelector('.box-discount__input-check');
-        const discountTextField = modalForm.querySelector('#discount');
-        const totalPrice = modalForm.querySelector('.form__total-info__sum');
-    */
     const createMain = () => {
         const main = document.createElement('div');
         main.classList.add('main-table');
@@ -98,6 +89,24 @@ const goods = [
         return main;
     };
 
+    const createtotalInfo = () => {
+        const totalInfo = document.createElement('div');
+        totalInfo.classList.add('main-table__total-info');
+
+        const pText = document.createElement('p');
+        pText.classList.add('main-table_total-info__text');
+        pText.textContent = 'Итоговая стоимость:';
+        const pSum = document.createElement('p');
+        pSum.classList.add('main-table__total-info__sum');
+        pSum.textContent = '$ 900.00';
+
+        totalInfo.append(pText, pSum);
+
+        return {
+            totalInfo, pSum
+        };
+    }
+
     const createUpperLine = () => {
         const upperLine = document.createElement('div');
         upperLine.classList.add('main-table__first-line');
@@ -105,15 +114,16 @@ const goods = [
         h2.classList.add('main-table__title');
         h2.textContent = 'CMS';
 
-        const totalInfo = document.createElement('div');
-        totalInfo.classList.add('main-table__total-info');
-        const pText = document.createElement('p');
-        pText.classList.add('main-table_total-info__text');
-        pText.textContent = 'Итоговая стоимость:';
-        const pSum = document.createElement('p');
-        pSum.classList.add('main-table__total-info__sum');
-        pSum.textContent = '$ 900.00';
-        totalInfo.append(pText, pSum);
+        /* const totalInfo = document.createElement('div');
+         totalInfo.classList.add('main-table__total-info');
+         const pText = document.createElement('p');
+         pText.classList.add('main-table_total-info__text');
+         pText.textContent = 'Итоговая стоимость:';
+         const pSum = document.createElement('p');
+         pSum.classList.add('main-table__total-info__sum');
+         pSum.textContent = '$ 900.00';
+         totalInfo.append(pText, pSum);*/
+        const { totalInfo, pSum } = createtotalInfo();
 
         upperLine.append(h2, totalInfo);
         return upperLine;
@@ -137,15 +147,15 @@ const goods = [
                 <span class="table__input-text">Поиск по наименованию и категории</span>
             </label>     
         `);
-        const btnAddGood = document.createElement('button');
-        btnAddGood.classList.add('table__button-submit');
-        btnAddGood.textContent = 'Добавить товар';
-        btnAddGood.type = 'submit';
-        tableComplete.append(tableSearch, btnAddGood);
+        const btnOpenForm = document.createElement('button');
+        btnOpenForm.classList.add('table__button-submit');
+        btnOpenForm.textContent = 'Добавить товар';
+
+        tableComplete.append(tableSearch, btnOpenForm);
 
         return {
             tableComplete,
-            btnAddGood,
+            btnOpenForm,
         };
     };
 
@@ -264,6 +274,125 @@ const goods = [
         return footer;
     };
 
+    const createForm = () => {
+        const overlay = document.createElement('div');
+        overlay.classList.add('modal', 'modal-overlay');
+
+        const form = document.createElement('form');
+        form.classList.add('form', 'modal__form');
+        form.insertAdjacentHTML('beforeend', `
+            <div class="modal__title-block">
+                <h2 class="modal__title modal__title-add  visually-hidden">Добавить товар</h2>
+                <h2 class="modal__title modal__title-change">Изменить товар</h2>
+                <p class="modal__title-text">id:<span class="modal__title-id">201910241</span> </p>
+            </div>
+            <fieldset class="form__box box">
+                <label class="box__label box__label-name">
+                    <span class="box__span">Наименование</span>
+                    <input class="box__input" type="text" name="name" required>
+                </label>
+                <label class="box__label box__label-category">
+                    <span class="box__span">Категория</span>
+                    <input class="box__input" type="text" name="category" required>
+                </label>
+
+                <label class="box__label box__label-units">
+                    <span class="box__span">Единицы измерения</span>
+                    <input class="box__input" type="text" name="units">
+                </label>
+
+                <fieldset class="box__fieldset-discount">
+                    <label class="box__label box__label-discount" for="discount"></label>
+                    <span class="box__span">Дисконт</span>
+                    <div class="box-discount">
+                        <input class="box__input box-discount__input-check" type="checkbox"
+                            aria-label="Добавить скидку">
+                        <input class="box__input box-discount__input-discount" type="number" name="discount"
+                            id="discount">
+                    </div>
+                </fieldset>
+
+                <label class="box__label box__label-description">
+                    <span class="box__span">Описание</span>
+                    <textarea class="box__text" name="description"></textarea>
+                </label>
+                <label class="box__label box__label-count">
+                    <span class="box__span">Количество</span>
+                    <input class=" box__input" type="number" name="count">
+                </label>
+                <label class="box__label box__label-price">
+                    <span class="box__span">Цена</span>
+                    <input class="box__input" type="number" name="price">
+                </label>
+                <div class="box__img-notice">
+                    <p class="form__img-notice__text">Изображение не должно превышать размер 1 Мб</p>
+                </div>
+                <label class="box__label-img">
+                    <span class="box__label-img-span">Добавить изображение</span>
+                    <input class="box__file visually-hidden" type="file" name="file" accept="image/jpg">
+                </label>
+                <div class="box__img">
+                    <img class="box__img-img visually-hidden" src="./img/modal-img.jpg" alt="Изображение товара">
+                    <img class="box__img-no-img">
+                </div>
+            </fieldset>
+        `)
+
+        const btnClose = document.createElement('button');
+        btnClose.classList.add('modal__close');
+        btnClose.innerHTML = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M2 2L22 22" stroke="#6E6893" stroke-width="3" stroke-linecap="round" />
+                    <path d="M2 22L22 2" stroke="#6E6893" stroke-width="3" stroke-linecap="round" />
+                </svg>`;
+
+        const totalForm = document.createElement('div');
+        totalForm.classList.add('form__total');
+        const { totalInfo, pSum } = createtotalInfo();
+
+        const btnaddGood = document.createElement('button');
+        btnaddGood.classList.add('table__button-submit');
+        btnaddGood.textContent = 'Добавить товар';
+        btnaddGood.type = 'submit';
+
+        totalForm.append(totalInfo, btnaddGood);
+        form.append(btnClose, totalForm);
+        overlay.append(form);
+
+        return {
+            overlay, form
+        }
+    };
+    /*
+        <div class="modal modal-overlay">
+        <form class="modal__form form" action="https://jsonplaceholder.typicode.com/posts" method="post">
+            <button class="modal__close" type="button">  </button>   
+
+            <div class="form__total">
+                <div class="form__total-info">
+                    <p class="form__total-info__text">Итоговая стоимость: </p>
+                    <p class="form__total-info__sum"> $ 900.00</p>
+                </div>
+                <button class="form__button" type="submit">Добавить товар</button>
+            </div>
+        </form>
+
+        <div class="modal-error">
+            <svg class="modal-error__img" width="94" height="94" viewBox="0 0 94 94" fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <path d="M2 2L92 92" stroke="#D80101" stroke-width="3" stroke-linecap="round" />
+                <path d="M2 92L92 2" stroke="#D80101" stroke-width="3" stroke-linecap="round" />
+            </svg>
+            <p class="modal-error__text">Что-то пошло не так</p>
+            <button class="modal-error__close" type="button">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M2 2L22 22" stroke="#6E6893" stroke-width="3" stroke-linecap="round" />
+                    <path d="M2 22L22 2" stroke="#6E6893" stroke-width="3" stroke-linecap="round" />
+                </svg>
+            </button>
+        </div>
+    </div>
+    */
+
     const addGoodItem = (good) => {
         data.push(good);
         console.log('goods', goods);
@@ -299,27 +428,32 @@ const goods = [
     const renderGoodTable = (app) => {
         const upperLine = createUpperLine();
 
-        const { tableComplete, btnAddGood } = createTableComplete();
+        const { tableComplete, btnOpenForm } = createTableComplete();
+
+        const { overlay, form } = createForm();
+
         const table = createTable();
         const footer = createFooter();
         const tableBody = createTableBody();
         tableBody.append(tableComplete, table, footer);
 
         const main = createMain();
-        main.container.append(upperLine, tableBody);
+        main.container.append(upperLine, tableBody, overlay);
         app.append(main);
 
         return {
             upperLine,
             table: table.tbody,
             thead: table.thead,
-            btnAddGood,
+            btnOpenForm,
+            overlay,
+            form,
         }
     };
 
     const init = (selectorApp) => {
         const app = document.querySelector(selectorApp);
-        const { table } = renderGoodTable(app);
+        const { table, overlay, form } = renderGoodTable(app);
         renderGoods(table, goods);
         deleteControle(table);
     }
