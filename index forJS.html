@@ -8,24 +8,18 @@
     <title>CRM-ShopOnline-table</title>
     <link rel="stylesheet" href="style/table.css">
     <script src="script/script.js" defer></script>
-    <!-- <script>document.addEventListener('DOMContentLoaded', () => {
+    <script>document.addEventListener('DOMContentLoaded', () => {
             goodShopInit('#app');
-        })</script> -->
+        })</script>
 </head>
 
 <body>
-    <!-- <div id="app"></div> -->
-    <div class="main-table">
-        <div class="main-table__container">
-            <div class="main-table__first-line">
-                <h2 class="main-table__title">CMS</h2>
-                <div class="main-table__total-info">
-                    <p class="main-table_total-info__text">Итоговая стоимость: </p>
-                    <p class="main-table__total-info__sum"> $ 900.00</p>
-                </div>
-            </div>
-            <div class="table main-table__table">
-                <div class="table__complete">
+    <div id="app"></div>
+    <!-- <div class="main-table"> -->
+    <!-- <div class="main-table__container"> -->
+    <!-- <div class="main-table__first-line">  </div> -->
+    <!-- <div class="table main-table__table"> -->
+    <!-- <div class="table__complete">
                     <div class="table__complete-seeking">
                         <button class="table__button-filter">Фильтр</button>
                         <label class="table__label">
@@ -34,67 +28,15 @@
                         </label>
                     </div>
                     <button class="table__button-submit" type="submit">Добавить товар</button>
-                </div>
-                <!-- <table class="table__content">
-                     <thead class="table__content-head">
-                        <tr class="table__content-head-row">
-                            <th class="table__content-column table__content-column-first">ID</th>
-                            <th class="table__content-column table__content-column-second">Наименование</th>
-                            <th class="table__content-column table__content-column-third">Категория</th>
-                            <th class="table__content-column table__content-column-fourth">Ед/изм</th>
-                            <th class="table__content-column table__content-column-fifth">Количество</th>
-                            <th class="table__content-column table__content-column-sixth">Цена</th>
-                            <th class="table__content-column table__content-column-seventh">ИТОГ</th>
-                            <th class="table__content-column table__content-column-eighth"></th>
-                        </tr>
-                    </thead> 
-                    <tbody class="table__content-body">-->
-                <!-- <tr class="table__content-row">
-                                                 <tr class="table__content-row">
-                            <td class="table__content-column table__content-column-first">246016548</td>
-                            <td class="table__content-column table__content-column-second">Навигационная система
-                                Soundmax</td>
-                            <td class="table__content-column table__content-column-third">Техника для дома</td>
-                            <td class="table__content-column table__content-column-fourth">шт</td>
-                            <td class="table__content-column table__content-column-fifth">5</td>
-                            <td class="table__content-column table__content-column-sixth">$100</td>
-                            <td class="table__content-column table__content-column-seventh">$500</td>
-                            <td class="table__content-column table__content-column-eighth">
-                                <button class="eighth-column_icon eighth-column_icon-img"></button>
-                                <button class="eighth-column_icon eighth-column_icon-edit"></button>
-                                <button class="eighth-column_icon eighth-column_icon-del"></button>
-                            </td>
-                        </tr> 
-                    </tbody>
+                </div> -->
+    <!-- <table class="table__content">
+                     <thead class="table__content-head">   </thead> 
+                     <tbody class="table__content-body"></tbody>                    
                 </table>-->
-                <div class="main-table__footer footer">
-                    <div class="footer__container">
-                        <div class="footer__show-page">
-                            <p class="footer__show-page__text">Показывать на странице:</p>
-                            <button class="footer__show-page__number">10</button>
-                        </div>
-                        <div class="footer__pages-info">1-10 of 276</div>
-                        <div class="footer__button">
-                            <button class="footer__button-back">
-                                <svg width="6" height="10" viewBox="0 0 6 10" fill="currentColor"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path
-                                        d="M5.79971 1.10636C6.42812 0.51287 5.43313 -0.426818 4.80472 0.216126L0.196378 4.51891C-0.0654595 4.7662 -0.0654595 5.21131 0.196378 5.4586L4.80472 9.81084C5.43313 10.4043 6.42812 9.46464 5.79971 8.87115L1.71504 5.01348L5.79971 1.10636Z" />
-                                </svg>
-                            </button>
-                            <button class="footer__button-head">
-                                <svg width="6" height="10" viewBox="0 0 6 10" fill="currentColor"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path
-                                        d="M5.79971 1.10636C6.42812 0.51287 5.43313 -0.426818 4.80472 0.216126L0.196378 4.51891C-0.0654595 4.7662 -0.0654595 5.21131 0.196378 5.4586L4.80472 9.81084C5.43313 10.4043 6.42812 9.46464 5.79971 8.87115L1.71504 5.01348L5.79971 1.10636Z" />
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <!-- <div class="main-table__footer footer">  </div> -->
+    <!-- </div> -->
+    <!-- </div> -->
+    <!-- </div> -->
     <div class="modal">
         <form class="modal__form form" action="https://jsonplaceholder.typicode.com/posts" method="post">
             <button class="modal__close" type="button">
@@ -112,15 +54,12 @@
             <fieldset class="form__box box">
                 <label class="box__label box__label-name">
                     <span class="box__span">Наименование</span>
-
                     <input class="box__input" type="text" name="name" required>
                 </label>
                 <label class="box__label box__label-category">
                     <span class="box__span">Категория</span>
-
                     <input class="box__input" type="text" name="category" required>
                 </label>
-
 
                 <label class="box__label box__label-units">
                     <span class="box__span">Единицы измерения</span>

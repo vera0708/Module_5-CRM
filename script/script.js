@@ -88,21 +88,64 @@ const goods = [
         const discountTextField = modalForm.querySelector('#discount');
         const totalPrice = modalForm.querySelector('.form__total-info__sum');
     */
-    const tableComplete = document.querySelector('.table__complete');
-    console.log(tableComplete);
-    const btnAddGood = document.querySelector('.table__button-submit');
+    const createMain = () => {
+        const main = document.createElement('div');
+        main.classList.add('main-table');
+        const container = document.createElement('div');
+        container.classList.add('main-table__container');
+        main.append(container);
+        main.container = container;
+        return main;
+    };
 
-    btnAddGood.addEventListener('click', () => {
-        modal.classList.add('is-visible');
-    });
+    const createUpperLine = () => {
+        const upperLine = document.createElement('div');
+        upperLine.classList.add('main-table__first-line');
+        const h2 = document.createElement('h2');
+        h2.classList.add('main-table__title');
+        h2.textContent = 'CMS';
 
-    modal.addEventListener('click', (eve) => {
-        const target = eve.target;
-        if (target === modal ||
-            target.closest('.modal__close')) {
-            modal.classList.remove('is-visible');
-        };
-    });
+        const totalInfo = document.createElement('div');
+        totalInfo.classList.add('main-table__total-info');
+        const pText = document.createElement('p');
+        pText.classList.add('main-table_total-info__text');
+        pText.textContent = 'Итоговая стоимость:';
+        const pSum = document.createElement('p');
+        pSum.classList.add('main-table__total-info__sum');
+        pSum.textContent = '$ 900.00';
+        totalInfo.append(pText, pSum);
+
+        upperLine.append(h2, totalInfo);
+        return upperLine;
+    };
+
+    const createTableBody = () => {
+        const tableBody = document.createElement('div');
+        tableBody.classList.add('table', 'main-table__table');
+        return tableBody;
+    };
+
+    const createTableComplete = () => {
+        const tableComplete = document.createElement('div');
+        tableComplete.classList.add('table__complete');
+        const tableSearch = document.createElement('div');
+        tableSearch.classList.add('table__complete-seeking');
+        tableSearch.insertAdjacentHTML('beforeend', `
+        <button class="table__button-filter">Фильтр</button>
+            <label class="table__label">
+                <input class="table__input-search" type="text" name="search">
+                <span class="table__input-text">Поиск по наименованию и категории</span>
+            </label>     
+        `);
+        const btnAddGood = document.createElement('button');
+        btnAddGood.classList.add('table__button-submit');
+        btnAddGood.textContent = 'Добавить товар';
+        // btnAddGood.type = 'submit';
+        tableComplete.append(tableSearch, btnAddGood);
+        console.log('tableComplete:', tableComplete)
+
+        return tableComplete;
+    };
 
     const createTh = (value, className) => {
         const th = document.createElement('th');
@@ -138,6 +181,7 @@ const goods = [
         tbody.classList.add('table__content-body');
         table.append(thead, tbody);
         table.tbody = tbody;
+        table.thead = thead;
         return table;
     };
 
@@ -176,30 +220,107 @@ const goods = [
         return row;
     };
 
-    const renderGoods = (table, goods) => {
+    const renderGoods = (elem, goods) => {
         const allRow = goods.map(createRow);
-        table.append(...allRow);
+        elem.append(...allRow);
         return allRow;
     };
 
-    const table = createTable();
-    renderGoods(table, goods);
+    const createFooter = () => {
+        const footer = document.createElement('div');
+        footer.classList.add('main-table__footer', 'footer');
+        const container = document.createElement('div');
+        container.classList.add('footer__container');
 
-    tableComplete.after(table);
-    // const allRow = renderGoods(table, goods);
-    const btnDelGood = document.querySelectorAll('.eighth-column_icon-del');
+        const footerShowPage = document.createElement('div');
+        footerShowPage.classList.add('footer__show-page');
+        footerShowPage.insertAdjacentHTML('beforeend', `
+        <p class="footer__show-page__text">Показывать на странице:</p>
+            <button class="footer__show-page__number">10</button>   
+        `);
+        const footerPageInfo = document.createElement('div');
+        footerPageInfo.classList.add('footer__pages-info');
+        footerPageInfo.insertAdjacentHTML('beforeend', `1-10 of 276`);
 
-    table.addEventListener('click', (e) => {
-        const target = e.target;
-        if (target.closest('.eighth-column_icon-del')) {
-            target.closest('.table__content-row').remove();
-        };
-    });
+        const footerBtnGroup = document.createElement('div');
+        footerBtnGroup.classList.add('footer__button');
+        const btnBack = document.createElement('button');
+        btnBack.classList.add('footer__button-back');
+        btnBack.innerHTML = `<svg width="6" height="10" viewBox="0 0 6 10" fill="currentColor"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5.79971 1.10636C6.42812 0.51287 5.43313 -0.426818 4.80472 0.216126L0.196378 4.51891C-0.0654595 4.7662 -0.0654595 5.21131 0.196378 5.4586L4.80472 9.81084C5.43313 10.4043 6.42812 9.46464 5.79971 8.87115L1.71504 5.01348L5.79971 1.10636Z" />
+                </svg>`;
+        const btnHead = document.createElement('button');
+        btnHead.classList.add('footer__button-head');
+        btnHead.innerHTML = `<svg width="6" height="10" viewBox="0 0 6 10" fill="currentColor"
+                     xmlns="http://www.w3.org/2000/svg">
+                     <path d="M5.79971 1.10636C6.42812 0.51287 5.43313 -0.426818 4.80472 0.216126L0.196378 4.51891C-0.0654595 4.7662 -0.0654595 5.21131 0.196378 5.4586L4.80472 9.81084C5.43313 10.4043 6.42812 9.46464 5.79971 8.87115L1.71504 5.01348L5.79971 1.10636Z" />
+                 </svg>`;
+        footerBtnGroup.append(btnBack, btnHead);
+        container.append(footerShowPage, footerPageInfo, footerBtnGroup);
+        footer.append(container);
+        // footer.container = container;
+        return footer;
+    };
 
-    /*const init = (selectorApp) => {
-        const app = document.querySelector(selectorApp);
-           const modal = createModal();
+    const addGoodItem = (good) => {
+        data.push(good);
+        console.log(goods);
+    };
+
+    const addGoodPage = (good, table) => {
+        table.append(createRow(good));
+    };
+
+    const modalControle = () => {
+        table.addEventListener('click', (e) => {
+            const target = e.target;
+            if (target.closest('.eighth-column_icon-del')) {
+                target.closest('.table__content-row').remove();
+            };
+        });
     }
-     window.goodShopInit = init;
-    */
+
+    /*    const formControl = (form, table, closeModal) => {
+            form.addEventListener('submit', e => {
+                e.preventDefault();
+                // Передаем данные из формы:
+                const formData = new FormData(e.target);
+                const newGood = Object.fromEntries(formData);
+                addGoodPage(newGood, table);
+                addGoodItem(newGood);
+                // Очищаем форму для следующего заполненияЖ
+                form.reset();
+                closeModal();
+            })
+        };
+        */
+
+    const renderGoodTable = (app) => {
+        const upperLine = createUpperLine();
+
+        const tableComplete = createTableComplete();
+        const table = createTable();
+        const footer = createFooter();
+        const tableBody = createTableBody();
+        tableBody.append(tableComplete, table, footer);
+
+        const main = createMain();
+        main.container.append(upperLine, tableBody);
+        app.append(main);
+
+        return {
+            upperLine,
+            table: table.tbody,
+            thead: table.thead,
+
+        }
+    };
+
+    const init = (selectorApp) => {
+        const app = document.querySelector(selectorApp);
+        const { table } = renderGoodTable(app);
+        renderGoods(table, goods);
+    }
+    window.goodShopInit = init;
 }
