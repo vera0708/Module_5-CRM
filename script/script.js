@@ -140,16 +140,17 @@ const goods = [
         const btnAddGood = document.createElement('button');
         btnAddGood.classList.add('table__button-submit');
         btnAddGood.textContent = 'Добавить товар';
-        // btnAddGood.type = 'submit';
+        btnAddGood.type = 'submit';
         tableComplete.append(tableSearch, btnAddGood);
-        console.log('tableComplete:', tableComplete)
 
-        return tableComplete;
+        return {
+            tableComplete,
+            btnAddGood,
+        };
     };
 
     const createTh = (value, className) => {
         const th = document.createElement('th');
-        console.log(value);
         th.className = className;
         th.textContent = value;
         return th;
@@ -265,14 +266,14 @@ const goods = [
 
     const addGoodItem = (good) => {
         data.push(good);
-        console.log(goods);
+        console.log('goods', goods);
     };
 
     const addGoodPage = (good, table) => {
         table.append(createRow(good));
     };
 
-    const modalControle = () => {
+    const deleteControle = (table) => {
         table.addEventListener('click', (e) => {
             const target = e.target;
             if (target.closest('.eighth-column_icon-del')) {
@@ -281,25 +282,24 @@ const goods = [
         });
     }
 
-    /*    const formControl = (form, table, closeModal) => {
-            form.addEventListener('submit', e => {
-                e.preventDefault();
-                // Передаем данные из формы:
-                const formData = new FormData(e.target);
-                const newGood = Object.fromEntries(formData);
-                addGoodPage(newGood, table);
-                addGoodItem(newGood);
-                // Очищаем форму для следующего заполненияЖ
-                form.reset();
-                closeModal();
-            })
-        };
-        */
+    const formControl = (form, table, closeModal) => {
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+            // Передаем данные из формы:
+            const formData = new FormData(e.target);
+            const newGood = Object.fromEntries(formData);
+            addGoodPage(newGood, table);
+            addGoodItem(newGood);
+            // Очищаем форму для следующего заполненияЖ
+            form.reset();
+            closeModal();
+        })
+    };
 
     const renderGoodTable = (app) => {
         const upperLine = createUpperLine();
 
-        const tableComplete = createTableComplete();
+        const { tableComplete, btnAddGood } = createTableComplete();
         const table = createTable();
         const footer = createFooter();
         const tableBody = createTableBody();
@@ -313,7 +313,7 @@ const goods = [
             upperLine,
             table: table.tbody,
             thead: table.thead,
-
+            btnAddGood,
         }
     };
 
@@ -321,6 +321,7 @@ const goods = [
         const app = document.querySelector(selectorApp);
         const { table } = renderGoodTable(app);
         renderGoods(table, goods);
+        deleteControle(table);
     }
     window.goodShopInit = init;
 }
