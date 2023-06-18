@@ -366,7 +366,6 @@ const goods = [
         <div class="modal modal-overlay">
         <form class="modal__form form" action="https://jsonplaceholder.typicode.com/posts" method="post">
             <button class="modal__close" type="button">  </button>   
-
             <div class="form__total">
                 <div class="form__total-info">
                     <p class="form__total-info__text">Итоговая стоимость: </p>
@@ -402,13 +401,39 @@ const goods = [
         table.append(createRow(good));
     };
 
-    const deleteControle = (table) => {
+    const deleteRow = (table) => {
         table.addEventListener('click', (e) => {
             const target = e.target;
             if (target.closest('.eighth-column_icon-del')) {
                 target.closest('.table__content-row').remove();
             };
         });
+    }
+
+    const modalControl = (btnOpenForm, overlay) => {
+        const openModal = () => {
+            overlay.classList.add('is-visible');
+        }
+
+        const closeModal = () => {
+            overlay.classList.remove('is-visible');
+        }
+
+        btnOpenForm.addEventListener('click', () => {
+            openModal();
+        });
+
+        overlay.addEventListener('click', (eve) => {
+            const target = eve.target;
+            if (target === overlay ||
+                target.closest('.modal__close')) {
+                closeModal();
+            };
+        });
+
+        return {
+            closeModal,
+        }
     }
 
     const formControl = (form, table, closeModal) => {
@@ -453,9 +478,11 @@ const goods = [
 
     const init = (selectorApp) => {
         const app = document.querySelector(selectorApp);
-        const { table, overlay, form } = renderGoodTable(app);
+        const { table, thead, btnOpenForm, overlay, form } = renderGoodTable(app);
         renderGoods(table, goods);
-        deleteControle(table);
+        deleteRow(table);
+
+        const { closeModal } = modalControl(btnOpenForm, overlay);
     }
     window.goodShopInit = init;
 }
