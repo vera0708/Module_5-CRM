@@ -114,15 +114,6 @@ const goods = [
         h2.classList.add('main-table__title');
         h2.textContent = 'CMS';
 
-        /* const totalInfo = document.createElement('div');
-         totalInfo.classList.add('main-table__total-info');
-         const pText = document.createElement('p');
-         pText.classList.add('main-table_total-info__text');
-         pText.textContent = 'Итоговая стоимость:';
-         const pSum = document.createElement('p');
-         pSum.classList.add('main-table__total-info__sum');
-         pSum.textContent = '$ 900.00';
-         totalInfo.append(pText, pSum);*/
         const { totalInfo, pSum } = createtotalInfo();
 
         upperLine.append(h2, totalInfo);
@@ -289,7 +280,7 @@ const goods = [
             <fieldset class="form__box box">
                 <label class="box__label box__label-name">
                     <span class="box__span">Наименование</span>
-                    <input class="box__input" type="text" name="name" required>
+                    <input class="box__input" type="text" name="title" required>
                 </label>
                 <label class="box__label box__label-category">
                     <span class="box__span">Категория</span>
@@ -336,7 +327,7 @@ const goods = [
                     <img class="box__img-no-img">
                 </div>
             </fieldset>
-        `)
+        `);
 
         const btnClose = document.createElement('button');
         btnClose.classList.add('modal__close');
@@ -362,44 +353,29 @@ const goods = [
             overlay, form
         }
     };
-    /*
-        <div class="modal modal-overlay">
-        <form class="modal__form form" action="https://jsonplaceholder.typicode.com/posts" method="post">
-            <button class="modal__close" type="button">  </button>   
-            <div class="form__total">
-                <div class="form__total-info">
-                    <p class="form__total-info__text">Итоговая стоимость: </p>
-                    <p class="form__total-info__sum"> $ 900.00</p>
-                </div>
-                <button class="form__button" type="submit">Добавить товар</button>
-            </div>
-        </form>
 
-        <div class="modal-error">
-            <svg class="modal-error__img" width="94" height="94" viewBox="0 0 94 94" fill="none"
+    const createModalError = () => {
+        const modalError = document.createElement('div');
+        modalError.classList.add('modal-error');
+        modalError.insertAdjacentHTML('beforeend', `
+         <svg class="modal-error__img" width="94" height="94" viewBox="0 0 94 94" fill="none"
                 xmlns="http://www.w3.org/2000/svg">
                 <path d="M2 2L92 92" stroke="#D80101" stroke-width="3" stroke-linecap="round" />
                 <path d="M2 92L92 2" stroke="#D80101" stroke-width="3" stroke-linecap="round" />
             </svg>
             <p class="modal-error__text">Что-то пошло не так</p>
-            <button class="modal-error__close" type="button">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        `);
+        const btnErrorClose = document.createElement('button');
+        btnErrorClose.classList.add('modal-error__close');
+        btnErrorClose.innerHTML = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M2 2L22 22" stroke="#6E6893" stroke-width="3" stroke-linecap="round" />
                     <path d="M2 22L22 2" stroke="#6E6893" stroke-width="3" stroke-linecap="round" />
-                </svg>
-            </button>
-        </div>
-    </div>
-    */
+                </svg>`;
+        btnErrorClose.type = 'button';
 
-    const addGoodItem = (good) => {
-        data.push(good);
-        console.log('goods', goods);
-    };
-
-    const addGoodPage = (good, table) => {
-        table.append(createRow(good));
-    };
+        modalError.append(btnErrorClose);
+        overlay.form.append(modalError);
+    }
 
     const deleteRow = (table) => {
         table.addEventListener('click', (e) => {
@@ -423,8 +399,8 @@ const goods = [
             openModal();
         });
 
-        overlay.addEventListener('click', (eve) => {
-            const target = eve.target;
+        overlay.addEventListener('click', (e) => {
+            const target = e.target;
             if (target === overlay ||
                 target.closest('.modal__close')) {
                 closeModal();
@@ -434,7 +410,16 @@ const goods = [
         return {
             closeModal,
         }
-    }
+    };
+
+    const addGoodItem = (good) => {
+        goods.push(good);
+        console.log('goods', goods);
+    };
+
+    const addGoodPage = (good, table) => {
+        table.append(createRow(good));
+    };
 
     const formControl = (form, table, closeModal) => {
         form.addEventListener('submit', e => {
@@ -447,7 +432,7 @@ const goods = [
             // Очищаем форму для следующего заполненияЖ
             form.reset();
             closeModal();
-        })
+        });
     };
 
     const renderGoodTable = (app) => {
@@ -483,6 +468,7 @@ const goods = [
         deleteRow(table);
 
         const { closeModal } = modalControl(btnOpenForm, overlay);
+        formControl(form, table, closeModal);
     }
     window.goodShopInit = init;
 }
