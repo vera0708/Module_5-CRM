@@ -184,6 +184,7 @@ const goods = [
         table.append(thead, tbody);
         table.tbody = tbody;
         table.thead = thead;
+
         return table;
     };
 
@@ -204,7 +205,10 @@ const goods = [
         const tdUnits = createTd(good.units, 'table__content-column-fourth');
         const tdCount = createTd(good.count, 'table__content-column-fifth');
         const tdPrice = createTd(good.price, 'table__content-column-sixth');
-        const tdCost = createTd(good.cost, 'table__content-column-seventh');
+
+        const tdCost = document.createElement('td');
+        tdCost.classList.add('table__content-column-seventh');
+        tdCost.textContent = `${good.count * good.price}`;
 
         const tdIcons = document.createElement('td');
         tdIcons.classList.add('table__content-column-eighth');
@@ -219,6 +223,7 @@ const goods = [
         tdIcons.append(btnImg, btnEdit, btnDel);
 
         row.append(tdId, tdTitle, tdCategory, tdUnits, tdCount, tdPrice, tdCost, tdIcons,);
+
         return row;
     };
 
@@ -296,7 +301,7 @@ const goods = [
                     <label class="box__label box__label-discount" for="discount"></label>
                     <span class="box__span">Дисконт</span>
                     <div class="box-discount">
-                        <input class="box__input box-discount__input-check" type="checkbox"
+                        <input class="box__input box-discount__input-check" name="agree" type="checkbox"
                             aria-label="Добавить скидку">
                         <input class="box__input box-discount__input-discount" type="number" name="discount"
                             id="discount">
@@ -309,7 +314,7 @@ const goods = [
                 </label>
                 <label class="box__label box__label-count">
                     <span class="box__span">Количество</span>
-                    <input class=" box__input" type="number" name="count">
+                    <input class=" box__input"  type="number" name="count">
                 </label>
                 <label class="box__label box__label-price">
                     <span class="box__span">Цена</span>
@@ -338,8 +343,17 @@ const goods = [
 
         const totalForm = document.createElement('div');
         totalForm.classList.add('form__total');
-        const { totalInfo, pSum } = createtotalInfo();
+        // const { totalInfo, pSum } = createtotalInfo();
+        const totalInfo = document.createElement('div');
+        totalInfo.classList.add('main-table__total-info');
+        const pText = document.createElement('p');
+        pText.classList.add('main-table_total-info__text');
+        pText.textContent = 'Итоговая стоимость:';
+        const pSum = document.createElement('p');
+        pSum.classList.add('main-table__total-info__sum');
+        pSum.textContent = `$ ${goods.count * goods.price}`;
 
+        totalInfo.append(pText, pSum);
         const btnaddGood = document.createElement('button');
         btnaddGood.classList.add('table__button-submit');
         btnaddGood.textContent = 'Добавить товар';
@@ -407,12 +421,24 @@ const goods = [
             };
         });
 
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Escape') {
+                closeModal();
+            };
+        })
+
         return {
             closeModal,
         }
     };
 
     const addGoodItem = (good) => {
+        if (good.agree.checked) {
+            alert('discount.disabled = false');
+        } else {
+            alert(' discount.disabled = true');
+        }
+        // discount.disabled = !good.agree.checked;
         goods.push(good);
         console.log('goods', goods);
     };
@@ -434,6 +460,20 @@ const goods = [
             closeModal();
         });
     };
+
+    const sortRows = (thead, table) => {
+        thead.addEventListener('click', e => {
+            const target = e.target;
+            if (target.textContent === 'ID') {
+                let sortedRows = Array.from(table.rows).sort((rowA, rowB) => rowA.cells[1].innerHTML > rowB.cells[1].innerHTML ? 1 : -1);
+                table.append(...sortedRows);
+            }
+            if (target.textContent === 'Наименование') {
+                let sortedRows = Array.from(table.rows).sort((rowA, rowB) => rowA.cells[2].innerHTML > rowB.cells[2].innerHTML ? 1 : -1);
+                table.append(...sortedRows);
+            };
+        });
+    }
 
     const renderGoodTable = (app) => {
         const upperLine = createUpperLine();
@@ -469,6 +509,7 @@ const goods = [
 
         const { closeModal } = modalControl(btnOpenForm, overlay);
         formControl(form, table, closeModal);
+        sortRows(thead, table);
     }
     window.goodShopInit = init;
 }
