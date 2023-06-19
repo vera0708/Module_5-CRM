@@ -89,7 +89,13 @@ const goods = [
         return main;
     };
 
-    const createtotalInfo = () => {
+    const createUpperLine = () => {
+        const upperLine = document.createElement('div');
+        upperLine.classList.add('main-table__first-line');
+        const h2 = document.createElement('h2');
+        h2.classList.add('main-table__title');
+        h2.textContent = 'CMS';
+
         const totalInfo = document.createElement('div');
         totalInfo.classList.add('main-table__total-info');
 
@@ -101,20 +107,6 @@ const goods = [
         pSum.textContent = '$ 900.00';
 
         totalInfo.append(pText, pSum);
-
-        return {
-            totalInfo, pSum
-        };
-    }
-
-    const createUpperLine = () => {
-        const upperLine = document.createElement('div');
-        upperLine.classList.add('main-table__first-line');
-        const h2 = document.createElement('h2');
-        h2.classList.add('main-table__title');
-        h2.textContent = 'CMS';
-
-        const { totalInfo, pSum } = createtotalInfo();
 
         upperLine.append(h2, totalInfo);
         return upperLine;
@@ -343,7 +335,7 @@ const goods = [
 
         const totalForm = document.createElement('div');
         totalForm.classList.add('form__total');
-        // const { totalInfo, pSum } = createtotalInfo();
+
         const totalInfo = document.createElement('div');
         totalInfo.classList.add('main-table__total-info');
         const pText = document.createElement('p');
