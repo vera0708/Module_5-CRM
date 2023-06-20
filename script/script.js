@@ -293,10 +293,10 @@ const goods = [
                     <label class="box__label box__label-discount" for="discount"></label>
                     <span class="box__span">Дисконт</span>
                     <div class="box-discount">
-                        <input class="box__input box-discount__input-check" name="agree" type="checkbox"
+                        <input class="box__input box-discount__input-check" type="checkbox" id="agree" name="agree" 
                             aria-label="Добавить скидку">
                         <input class="box__input box-discount__input-discount" type="number" name="discount"
-                            id="discount">
+                            id="discount" disabled>
                     </div>
                 </fieldset>
 
@@ -336,22 +336,22 @@ const goods = [
         const totalForm = document.createElement('div');
         totalForm.classList.add('form__total');
 
-        const totalInfo = document.createElement('div');
-        totalInfo.classList.add('main-table__total-info');
-        const pText = document.createElement('p');
-        pText.classList.add('main-table_total-info__text');
-        pText.textContent = 'Итоговая стоимость:';
-        const pSum = document.createElement('p');
-        pSum.classList.add('main-table__total-info__sum');
-        pSum.textContent = `$ ${form.count.value * form.price.value}`;
+        const totalFormInfo = document.createElement('div');
+        totalFormInfo.classList.add('main-table__total-info');
+        const formText = document.createElement('p');
+        formText.classList.add('main-table_total-info__text');
+        formText.textContent = 'Итоговая стоимость:';
+        const formSum = document.createElement('p');
+        formSum.classList.add('main-table__total-info__sum');
+        formSum.textContent = `$ ${form.count.value * form.price.value}`;
 
-        totalInfo.append(pText, pSum);
+        totalFormInfo.append(formText, formSum);
         const btnaddGood = document.createElement('button');
         btnaddGood.classList.add('table__button-submit');
         btnaddGood.textContent = 'Добавить товар';
         btnaddGood.type = 'submit';
 
-        totalForm.append(totalInfo, btnaddGood);
+        totalForm.append(totalFormInfo, btnaddGood);
         form.append(btnClose, totalForm);
         overlay.append(form);
 
@@ -417,7 +417,22 @@ const goods = [
             if (e.code === 'Escape') {
                 closeModal();
             };
-        })
+        });
+
+        const isChecked = () => {
+            console.log('isChecked');
+            const agreed = document.getElementById('agree');
+            const input = document.getElementById('discount');
+            agreed.addEventListener('click', e => {
+                if (!agreed.checked) {
+                    input.disabled = true;
+                    input.value = '';
+                } else {
+                    input.disabled = false;
+                }
+            });
+        };
+        isChecked();
 
         return {
             closeModal,
@@ -431,17 +446,6 @@ const goods = [
 
     const addGoodPage = (good, table) => {
         table.append(createRow(good));
-    };
-
-    const isChecked = (good) => {
-        if (good.agree.checked) {
-            alert('discount.disabled = false');
-            discount.disabled = false
-        } else {
-            alert(' discount.disabled = true');
-            discount.disabled = true;
-        }
-        // discount.disabled = !good.agree.checked;
     };
 
     const formControl = (form, table, closeModal) => {
