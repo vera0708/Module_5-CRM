@@ -425,6 +425,15 @@ const goods = [
     };
 
     const addGoodItem = (good) => {
+        goods.push(good);
+        console.log('goods', goods);
+    };
+
+    const addGoodPage = (good, table) => {
+        table.append(createRow(good));
+    };
+
+    const isChecked = (good) => {
         if (good.agree.checked) {
             alert('discount.disabled = false');
             discount.disabled = false
@@ -433,12 +442,6 @@ const goods = [
             discount.disabled = true;
         }
         // discount.disabled = !good.agree.checked;
-        goods.push(good);
-        console.log('goods', goods);
-    };
-
-    const addGoodPage = (good, table) => {
-        table.append(createRow(good));
     };
 
     const formControl = (form, table, closeModal) => {
