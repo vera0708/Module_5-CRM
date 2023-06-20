@@ -343,7 +343,7 @@ const goods = [
         pText.textContent = 'Итоговая стоимость:';
         const pSum = document.createElement('p');
         pSum.classList.add('main-table__total-info__sum');
-        pSum.textContent = `$ ${goods.count * goods.price}`;
+        pSum.textContent = `$ ${form.count.value * form.price.value}`;
 
         totalInfo.append(pText, pSum);
         const btnaddGood = document.createElement('button');
@@ -427,8 +427,10 @@ const goods = [
     const addGoodItem = (good) => {
         if (good.agree.checked) {
             alert('discount.disabled = false');
+            discount.disabled = false
         } else {
             alert(' discount.disabled = true');
+            discount.disabled = true;
         }
         // discount.disabled = !good.agree.checked;
         goods.push(good);
@@ -442,6 +444,8 @@ const goods = [
     const formControl = (form, table, closeModal) => {
         form.addEventListener('submit', e => {
             e.preventDefault();
+            const sum = form.count.value * form.price.value;
+            console.log(sum);
             // Передаем данные из формы:
             const formData = new FormData(e.target);
             const newGood = Object.fromEntries(formData);
@@ -450,6 +454,8 @@ const goods = [
             // Очищаем форму для следующего заполненияЖ
             form.reset();
             closeModal();
+
+            return sum;
         });
     };
 
@@ -457,11 +463,13 @@ const goods = [
         thead.addEventListener('click', e => {
             const target = e.target;
             if (target.textContent === 'ID') {
-                let sortedRows = Array.from(table.rows).sort((rowA, rowB) => rowA.cells[1].innerHTML > rowB.cells[1].innerHTML ? 1 : -1);
+                console.log(thead.textContent[0]);
+                let sortedRows = Array.from(table.rows).sort((rowA, rowB) => rowA.cells[0].innerHTML > rowB.cells[0].innerHTML ? 1 : -1);
                 table.append(...sortedRows);
             }
             if (target.textContent === 'Наименование') {
-                let sortedRows = Array.from(table.rows).sort((rowA, rowB) => rowA.cells[2].innerHTML > rowB.cells[2].innerHTML ? 1 : -1);
+                console.log(thead.textContent);
+                let sortedRows = Array.from(table.rows).sort((rowA, rowB) => rowA.cells[1].innerHTML > rowB.cells[1].innerHTML ? 1 : -1);
                 table.append(...sortedRows);
             };
         });
