@@ -164,7 +164,7 @@ const goods = [
         const thCategory = createTh('Категория', 'table__content-column-third');
         const thUnits = createTh('Ед/изм', 'table__content-column-fourth');
         const thCount = createTh('Количество', 'table__content-column-fifth');
-        const thPrice = createTd('Цена', 'table__content-column-sixth');
+        const thPrice = createTh('Цена', 'table__content-column-sixth');
         const thCost = createTh('ИТОГ', 'table__content-column-seventh');
         const thIcons = createTh('', 'table__content-column-eighth');
         tr.append(thId, thTitle, thCategory, thUnits, thCount, thPrice, thCost, thIcons);
@@ -306,7 +306,7 @@ const goods = [
                 </label>
                 <label class="box__label box__label-count">
                     <span class="box__span">Количество</span>
-                    <input class=" box__input"  type="number" name="count">
+                    <input class=" box__input" type="number" name="count">
                 </label>
                 <label class="box__label box__label-price">
                     <span class="box__span">Цена</span>
@@ -343,15 +343,15 @@ const goods = [
         formText.textContent = 'Итоговая стоимость:';
         const formSum = document.createElement('p');
         formSum.classList.add('main-table__total-info__sum');
-        formSum.textContent = `$ ${form.count.value * form.price.value}`;
+        formSum.textContent = `$ 0`;
 
         totalFormInfo.append(formText, formSum);
-        const btnaddGood = document.createElement('button');
-        btnaddGood.classList.add('table__button-submit');
-        btnaddGood.textContent = 'Добавить товар';
-        btnaddGood.type = 'submit';
+        const btnAddGood = document.createElement('button');
+        btnAddGood.classList.add('table__button-submit');
+        btnAddGood.textContent = 'Добавить товар';
+        btnAddGood.type = 'submit';
 
-        totalForm.append(totalFormInfo, btnaddGood);
+        totalForm.append(totalFormInfo, btnAddGood);
         form.append(btnClose, totalForm);
         overlay.append(form);
 
@@ -420,7 +420,7 @@ const goods = [
         });
 
         const isChecked = () => {
-            console.log('isChecked');
+            // console.log('isChecked');
             const agreed = document.getElementById('agree');
             const input = document.getElementById('discount');
             agreed.addEventListener('click', e => {
@@ -429,6 +429,7 @@ const goods = [
                     input.value = '';
                 } else {
                     input.disabled = false;
+                    input.focus();
                 }
             });
         };
@@ -449,6 +450,41 @@ const goods = [
     };
 
     const formControl = (form, table, closeModal) => {
+        const sumAddedGood = form.querySelector('.main-table__total-info__sum');
+        const priceAddedGood = form.querySelector("input[name='price']");
+        const countAddedGood = form.querySelector("input[name='count']");
+        const discountAddedGood = form.querySelector("input[name='discount']");
+
+        priceAddedGood.addEventListener('input', () => {
+            sumGoodSum();
+        });
+
+        countAddedGood.addEventListener('blur', () => {
+            sumGoodSum();
+        });
+
+        discountAddedGood.addEventListener('blur', () => {
+            sumGoodSum();
+        });
+
+        const sumGoodSum = () => {
+            if (countAddedGood.value === '' || priceAddedGood.value === '') {
+                return;
+            }
+
+            let sum = priceAddedGood.value * countAddedGood.value;
+
+            if (discountAddedGood !== '') {
+                sum -= discountAddedGood.value;
+            };
+            sumAddedGood.textContent = sum;
+            if (sum < 0 || sum === undefined) {
+                alert('Проверьте введённые данные');
+                return;
+            }
+            return sumAddedGood.textContent;
+        }
+
         form.addEventListener('submit', e => {
             e.preventDefault();
             const sum = form.count.value * form.price.value;
@@ -461,26 +497,28 @@ const goods = [
             // Очищаем форму для следующего заполненияЖ
             form.reset();
             closeModal();
-
-            return sum;
         });
     };
+
+    const sumTotalSum = (table) => {
+
+    }
 
     const sortRows = (thead, table) => {
         thead.addEventListener('click', e => {
             const target = e.target;
-            if (target.textContent === 'ID') {
-                console.log(thead.textContent[0]);
-                let sortedRows = Array.from(table.rows).sort((rowA, rowB) => rowA.cells[0].innerHTML > rowB.cells[0].innerHTML ? 1 : -1);
-                table.append(...sortedRows);
-            }
-            if (target.textContent === 'Наименование') {
-                console.log(thead.textContent);
-                let sortedRows = Array.from(table.rows).sort((rowA, rowB) => rowA.cells[1].innerHTML > rowB.cells[1].innerHTML ? 1 : -1);
-                table.append(...sortedRows);
-            };
+            const headItems = thead.querySelectorAll('th');
+            [...headItems].forEach((item, index) => {
+                if (headItems[index].textContent) {
+                    if (target === item) {
+                        // console.log('index', index);
+                        let sortedRows = Array.from(table.rows).sort((rowA, rowB) => rowA.cells[index].innerHTML > rowB.cells[index].innerHTML ? 1 : -1);
+                        table.append(...sortedRows);
+                    };
+                }
+            });
         });
-    }
+    };
 
     const renderGoodTable = (app) => {
         const upperLine = createUpperLine();
