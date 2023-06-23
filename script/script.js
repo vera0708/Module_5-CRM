@@ -225,6 +225,16 @@ const goods = [
         return allRow;
     };
 
+    const calculateTotalSum = () => {
+        const pSum = document.querySelector('.main-table__total-info__sum');
+        let totalSum = 0;
+        goods.forEach(({ price, count }) => {
+            totalSum += price * count;
+        });
+        pSum.textContent = totalSum;
+        return pSum.textContent;
+    };
+
     const createFooter = () => {
         const footer = document.createElement('div');
         footer.classList.add('main-table__footer', 'footer');
@@ -389,6 +399,7 @@ const goods = [
             if (target.closest('.eighth-column_icon-del')) {
                 target.closest('.table__content-row').remove();
             };
+            // calculateTotalSum();
         });
     }
 
@@ -450,7 +461,7 @@ const goods = [
     };
 
     const formControl = (form, table, closeModal) => {
-        const sumAddedGood = form.querySelector('.main-table__total-info__sum');
+        const formSum = form.querySelector('.main-table__total-info__sum');
         const priceAddedGood = form.querySelector("input[name='price']");
         const countAddedGood = form.querySelector("input[name='count']");
         const discountAddedGood = form.querySelector("input[name='discount']");
@@ -471,38 +482,33 @@ const goods = [
             if (countAddedGood.value === '' || priceAddedGood.value === '') {
                 return;
             }
-
             let sum = priceAddedGood.value * countAddedGood.value;
 
             if (discountAddedGood !== '') {
                 sum -= discountAddedGood.value;
             };
-            sumAddedGood.textContent = sum;
+
+            formSum.textContent = sum;
             if (sum < 0 || sum === undefined) {
                 alert('Проверьте введённые данные');
                 return;
             }
-            return sumAddedGood.textContent;
-        }
+            return formSum.textContent;
+        };
 
         form.addEventListener('submit', e => {
             e.preventDefault();
-            const sum = form.count.value * form.price.value;
-            console.log(sum);
             // Передаем данные из формы:
             const formData = new FormData(e.target);
             const newGood = Object.fromEntries(formData);
             addGoodPage(newGood, table);
             addGoodItem(newGood);
+            calculateTotalSum(table);
             // Очищаем форму для следующего заполненияЖ
             form.reset();
             closeModal();
         });
     };
-
-    const sumTotalSum = (table) => {
-
-    }
 
     const sortRows = (thead, table) => {
         thead.addEventListener('click', e => {
@@ -550,6 +556,7 @@ const goods = [
         const app = document.querySelector(selectorApp);
         const { table, thead, btnOpenForm, overlay, form } = renderGoodTable(app);
         renderGoods(table, goods);
+        calculateTotalSum(table);
         deleteRow(table);
 
         const { closeModal } = modalControl(btnOpenForm, overlay);
