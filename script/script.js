@@ -396,9 +396,31 @@ const goods = [
     const deleteRow = (table) => {
         table.addEventListener('click', (e) => {
             const target = e.target;
+            // const allRows = table.querySelectorAll('tr');
+            // [...allRows].forEach((item, index) => {
+            //     console.log('item', item);
+            //     console.log('index', index);
+            // });
+            // const ids = table.querySelectorAll('.table__content-column-first');
+            // [...ids].forEach((index) => {
+            //     for (let i = 0; i < goods.length; i++) {
+            //         console.log('goods[i].id= ', goods[i].id.toString());
+            //         console.log('index.textContent= ', index.textContent);
+            //         if (index.textContent === goods[i].id.toString()) {
+            //             console.log('Удалить товар c id:', goods[i].id);
+            //             return
+            //         }
+            //         // console.log('goods[index].id: ', goods[i].id);
+            //     }
+            // });
+
+            console.log('table.rows before', table.rows);
             if (target.closest('.eighth-column_icon-del')) {
+                const id = target.closest('.table__content-column-first');
+                console.log('id:', id);
                 target.closest('.table__content-row').remove();
             };
+            console.log('table.rows after', table.rows);
             // calculateTotalSum();
         });
     }
