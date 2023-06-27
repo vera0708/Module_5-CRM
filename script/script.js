@@ -403,21 +403,17 @@ const goods = [
                 const id = row.querySelector('.table__content-column-first').textContent;
                 target.closest('.table__content-row').remove();
                 for (let i = 0; i < goods.length; i++) {
-                    console.log('goods[i].id= ', goods[i].id.toString());
-                    console.log('i= ', i);
                     if (id === goods[i].id.toString()) {
                         console.log('Удалить товар c id:', goods[i].id);
                         console.log('Удаляем товар:', goods[i]);
-                        const slicedGoods = goods.slice([i]);
-                        console.log('Goods после удаления:', slicedGoods);
-                        return;
+                        goods.splice([i], 1);
+                        console.log('Goods после удаления:', goods);
                     };
                 }
+                calculateTotalSum();
             };
-            calculateTotalSum();
         });
-
-    }
+    };
 
     const modalControl = (btnOpenForm, overlay) => {
         const openModal = () => {
@@ -469,7 +465,7 @@ const goods = [
 
     const addGoodItem = (good) => {
         goods.push(good);
-        console.log('goods', goods);
+        console.log('После добавления товара имеем goods', goods);
     };
 
     const addGoodPage = (good, table) => {
