@@ -200,7 +200,7 @@ const goods = [
 
         const tdCost = document.createElement('td');
         tdCost.classList.add('table__content-column-seventh');
-        tdCost.textContent = `${good.count * good.price}`;
+        tdCost.textContent = `${good.count * good.price}`.toLocaleString('ru');
 
         const tdIcons = document.createElement('td');
         tdIcons.classList.add('table__content-column-eighth');
@@ -231,7 +231,8 @@ const goods = [
         goods.forEach(({ price, count }) => {
             totalSum += price * count;
         });
-        pSum.textContent = totalSum;
+
+        pSum.textContent = totalSum.toLocaleString('ru');
         return pSum.textContent;
     };
 
@@ -396,33 +397,26 @@ const goods = [
     const deleteRow = (table) => {
         table.addEventListener('click', (e) => {
             const target = e.target;
-            // const allRows = table.querySelectorAll('tr');
-            // [...allRows].forEach((item, index) => {
-            //     console.log('item', item);
-            //     console.log('index', index);
-            // });
-            // const ids = table.querySelectorAll('.table__content-column-first');
-            // [...ids].forEach((index) => {
-            //     for (let i = 0; i < goods.length; i++) {
-            //         console.log('goods[i].id= ', goods[i].id.toString());
-            //         console.log('index.textContent= ', index.textContent);
-            //         if (index.textContent === goods[i].id.toString()) {
-            //             console.log('Удалить товар c id:', goods[i].id);
-            //             return
-            //         }
-            //         // console.log('goods[index].id: ', goods[i].id);
-            //     }
-            // });
-
-            console.log('table.rows before', table.rows);
-            if (target.closest('.eighth-column_icon-del')) {
-                const id = target.closest('.table__content-column-first');
-                console.log('id:', id);
+            const delCart = target.closest('.eighth-column_icon-del');
+            if (delCart) {
+                const row = delCart.closest('.table__content-row');
+                const id = row.querySelector('.table__content-column-first').textContent;
                 target.closest('.table__content-row').remove();
+                for (let i = 0; i < goods.length; i++) {
+                    console.log('goods[i].id= ', goods[i].id.toString());
+                    console.log('i= ', i);
+                    if (id === goods[i].id.toString()) {
+                        console.log('Удалить товар c id:', goods[i].id);
+                        console.log('Удаляем товар:', goods[i]);
+                        const slicedGoods = goods.slice([i]);
+                        console.log('Goods после удаления:', slicedGoods);
+                        return;
+                    };
+                }
             };
-            console.log('table.rows after', table.rows);
-            // calculateTotalSum();
+            calculateTotalSum();
         });
+
     }
 
     const modalControl = (btnOpenForm, overlay) => {
@@ -510,7 +504,7 @@ const goods = [
                 sum -= discountAddedGood.value;
             };
 
-            formSum.textContent = sum;
+            formSum.textContent = sum.toLocaleString('ru');
             if (sum < 0 || sum === undefined) {
                 alert('Проверьте введённые данные');
                 return;
@@ -525,7 +519,7 @@ const goods = [
             const newGood = Object.fromEntries(formData);
             addGoodPage(newGood, table);
             addGoodItem(newGood);
-            calculateTotalSum(table);
+            calculateTotalSum();
             // Очищаем форму для следующего заполненияЖ
             form.reset();
             closeModal();
