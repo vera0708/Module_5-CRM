@@ -529,7 +529,6 @@ const goods = [
             [...headItems].forEach((item, index) => {
                 if (headItems[index].textContent) {
                     if (target === item) {
-                        // console.log('index', index);
                         let sortedRows = Array.from(table.rows).sort((rowA, rowB) => rowA.cells[index].innerHTML > rowB.cells[index].innerHTML ? 1 : -1);
                         table.append(...sortedRows);
                     };
