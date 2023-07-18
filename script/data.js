@@ -88,7 +88,6 @@ export const getData = () => {
 
 export const addGoodItem = (good) => {
     goods.push(good);
-    console.log('После добавления товара имеем goods', goods);
 };
 
 export const addGoodPage = (good, table) => {
