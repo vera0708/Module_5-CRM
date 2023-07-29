@@ -127,6 +127,7 @@ export const createRow = (good) => {
     btnNoImg.classList.add('eighth-column_icon', 'eighth-column_icon-no-img');
     const btnImg = document.createElement('button');
     btnImg.classList.add('eighth-column_icon', 'eighth-column_icon-img');
+    btnImg.dataset.pic = 'img/телефон-Xiomi.jpg';
     const btnEdit = document.createElement('button');
     btnEdit.classList.add('eighth-column_icon', 'eighth-column_icon-edit');
     const btnDel = document.createElement('button');

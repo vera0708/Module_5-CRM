@@ -1,4 +1,4 @@
-import { formControl, modalControl } from "./control.js";
+import { formControl, modalControl, openBtnImg } from "./control.js";
 import deleteRow from "./deleting.js";
 import { renderGoodTable, renderGoods } from "./renders.js";
 import sortRows from "./sorting.js";
@@ -13,6 +13,7 @@ import { getData } from "./data.js";
         renderGoods(table, getData());
         calculateTotalSum(table);
         deleteRow(table);
+        openBtnImg(table);
 
         const { closeModal } = modalControl(btnOpenForm, overlay);
         formControl(form, table, closeModal);

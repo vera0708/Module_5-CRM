@@ -98,3 +98,16 @@ export const modalControl = (btnOpenForm, overlay) => {
         closeModal,
     }
 };
+
+export const openBtnImg = (table) => {
+    table.addEventListener('click', (e) => {
+        const target = e.target;
+        const btnImg = target.closest('.eighth-column_icon-img');
+        if (btnImg) {
+            let goodImg = btnImg.dataset.pic;
+            console.log('goodImg: ', goodImg);
+            goodImg = open('about: blank', '', 'width=600, height=600');
+            goodImg.moveTo(screen.width / 2 - 300, screen.height / 2 - 300);
+        };
+    });
+};
