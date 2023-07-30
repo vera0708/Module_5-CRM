@@ -106,7 +106,7 @@ export const openBtnImg = (table) => {
         if (btnImg) {
             let goodImg = btnImg.dataset.pic;
             console.log('goodImg: ', goodImg);
-            goodImg = open('about: blank', '', 'width=600, height=600');
+            goodImg = open('img/телефон-Xiomi.jpg', '', 'width=600, height=600');
             goodImg.moveTo(screen.width / 2 - 300, screen.height / 2 - 300);
         };
     });
