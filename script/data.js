@@ -1,6 +1,97 @@
 import { createRow } from "./createElements.js";
+import { API_URL } from "./const.js";
 
-const goods = [
+// https://persistent-mangrove-fountain.glitch.me/
+
+const loadGoods = async () => {
+    const result = await fetch(`${API_URL}api/goods`);
+    const data = await result.json();
+    console.log('loadData = ', data);
+    return data;
+};
+
+export const setData = (value) => {
+    goods = value;
+};
+
+export const getData = async () => {
+    const goods = await loadGoods();
+    return goods;
+};
+
+export const addGoodItem = async (good) => {
+    const goods = await loadGoods();
+    goods.push(good);
+};
+
+export const addGoodPage = (good, table) => {
+    table.append(createRow(good));
+};
+
+/*
+ fetch('http://localhost:3000/api/goods', {
+    method: 'POST',
+    body: JSON.stringify({
+        title: 'cable XXX',
+        description: 'длинный белый (3м * 0.05)',
+         category: 'others',
+        price: 1600,
+         units: 'шт',
+         count: 10,
+     }),
+     headers: {
+        'Content-Type': 'application/json'
+    }
+ });*/
+
+/* AJAX
+// получение данных
+const loadGoods = (callback) => {
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', 'https://cryptic-temple-67544.herokuapp.com/api/goods');
+    xhr.addEventListener('load', () => {
+        const data = JSON.parse(xhr.response);
+        callback(data);
+    });
+    xhr.addEventListener('error', () => {
+        console.log('error');
+    });
+    xhr.send();
+};
+// находим кнопку по нажатию на которую будем получать товары:
+const get = document.querySelector('#get');
+get.addEventListener('click', () => {
+    loadGoods(renderGoods);
+});
+// отправка данных
+const sendData = (body, callback) => {
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', 'https://jsonplaceholder.typicode.com/posts');
+
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.addEventListener('load', () => {
+        const data = JSON.parse(xhr.response);
+        callback(data);
+    });
+    xhr.addEventListener('error', () => {
+        console.log('error');
+    });
+    xhr.send(JSON.stringify(body));
+};
+// находим кнопку по нажатию на которую будем получать товары:
+const form = document.querySelector('#form');
+form.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    sendData({
+        title: form.title.value,
+        body: form.description.value,
+    })
+}, (data) => {
+    form.textContent = `Заявка номер ${data.id} успешно отправлена`
+});
+*/
+/* const goods = [
     {
         "id": 253842678,
         "title": "Смартфон Xiaomi 11T 8/128GB",
@@ -77,19 +168,4 @@ const goods = [
         }
     },
 ];
-
-export const setData = (value) => {
-    goods = value;
-};
-
-export const getData = () => {
-    return goods;
-};
-
-export const addGoodItem = (good) => {
-    goods.push(good);
-};
-
-export const addGoodPage = (good, table) => {
-    table.append(createRow(good));
-};
+*/

@@ -5,12 +5,11 @@ import sortRows from "./sorting.js";
 import calculateTotalSum from "./utilities.js";
 import { getData } from "./data.js";
 
-
 {
-    const init = (selectorApp) => {
+    const init = async (selectorApp) => {
         const app = document.querySelector(selectorApp);
         const { table, thead, btnOpenForm, overlay, form } = renderGoodTable(app);
-        renderGoods(table, getData());
+        renderGoods(table, await getData());
         calculateTotalSum(table);
         deleteRow(table);
         openBtnImg(table);

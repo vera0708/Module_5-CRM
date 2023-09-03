@@ -1,5 +1,7 @@
 import { addGoodItem, addGoodPage } from "./data.js";
 import calculateTotalSum from "./utilities.js";
+import { API_URL } from "./const.js";
+import { createModalError } from "./createElements.js";
 
 export const formControl = (form, table, closeModal) => {
     const formSum = form.querySelector('.main-table__total-info__sum');
@@ -42,12 +44,34 @@ export const formControl = (form, table, closeModal) => {
         // Передаем данные из формы:
         const formData = new FormData(e.target);
         const newGood = Object.fromEntries(formData);
-        addGoodPage(newGood, table);
-        addGoodItem(newGood);
-        calculateTotalSum();
-        // Очищаем форму для следующего заполненияЖ
-        form.reset();
-        closeModal();
+        console.log('newGood: ', newGood);
+
+        fetch(`${API_URL}api/goods`, {
+            method: 'POST',
+            body: JSON.stringify(newGood)
+        }).then(response => {
+            if (response.status === 200 || response.status === 201) {
+                addGoodPage(newGood, table);
+                addGoodItem(newGood);
+                calculateTotalSum();
+                form.reset();
+                closeModal();
+                return response.json()
+            } else {
+                throw new Error(response.status)
+            }
+        })
+            .then(newGood => {
+                alert(`Товар ${newGood.title} успешно добавлен в таблицу`);
+                form.reset()
+            })
+            .catch(error => {
+                if (response.status === 422 || response.status === 404 || response.status >= 500) {
+                    alert('Произошла ошибка, статус ' + error.message);
+                } else {
+                    createModalError();
+                }
+            });
     });
 };
 
@@ -79,7 +103,6 @@ export const modalControl = (btnOpenForm, overlay) => {
     });
 
     const isChecked = () => {
-        // console.log('isChecked');
         const agreed = document.getElementById('agree');
         const input = document.getElementById('discount');
         agreed.addEventListener('click', e => {

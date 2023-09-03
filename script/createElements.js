@@ -274,7 +274,7 @@ export const createForm = () => {
     }
 };
 
-const createModalError = () => {
+export const createModalError = () => {
     const modalError = document.createElement('div');
     modalError.classList.add('modal-error');
     modalError.insertAdjacentHTML('beforeend', `
