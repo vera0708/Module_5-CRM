@@ -66,7 +66,7 @@ export const formControl = (form, table, closeModal) => {
                 form.reset()
             })
             .catch(error => {
-                if (response.status === 422 || response.status === 404 || (response.status % 100 === 5)) {
+                if (response.status === 422 || response.status === 404 || Math.round(response.status / 100) === 5) {
                     alert('Произошла ошибка, статус ' + error.message);
                 } else {
                     createModalError();
