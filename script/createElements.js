@@ -294,5 +294,4 @@ export const createModalError = () => {
     btnErrorClose.type = 'button';
 
     modalError.append(btnErrorClose);
-    overlay.form.append(modalError);
 }
