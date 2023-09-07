@@ -43,4 +43,4 @@ export const removeItem = async (goodId) => {
     await fetch(`${API_URL}api/goods/${goodId}`, {
         method: 'DELETE'
     })
-}
+};

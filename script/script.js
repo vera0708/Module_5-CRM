@@ -4,6 +4,7 @@ import { renderGoodTable, renderGoods } from "./renders.js";
 import sortRows from "./sorting.js";
 import calculateTotalSum from "./utilities.js";
 import { getData } from "./data.js";
+import editRow from "./editing.js";
 
 {
     const init = async (selectorApp) => {
@@ -13,9 +14,9 @@ import { getData } from "./data.js";
         calculateTotalSum(table);
         deleteRow(table);
         openBtnImg(table);
-        // editRow(form, table, closeModal);
         const { closeModal } = modalControl(btnOpenForm, overlay);
         formControl(form, table, closeModal);
+        editRow(form, table, closeModal);
         sortRows(thead, table);
     }
     window.goodShopInit = init;
