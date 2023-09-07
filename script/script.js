@@ -13,7 +13,7 @@ import { getData } from "./data.js";
         calculateTotalSum(table);
         deleteRow(table);
         openBtnImg(table);
-
+        // editRow(form, table, closeModal);
         const { closeModal } = modalControl(btnOpenForm, overlay);
         formControl(form, table, closeModal);
         sortRows(thead, table);
