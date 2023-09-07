@@ -1,5 +1,6 @@
 import calculateTotalSum from "./utilities.js";
 import { API_URL } from "./const.js";
+import { createModalError } from "./createElements.js";
 
 const sendData = (body, callback) => {
     const xhr = new XMLHttpRequest();
@@ -23,10 +24,10 @@ const editRow = async (form, table, closeModal) => {
         if (editCart) {
             const row = editCart.closest('.table__content-row');
             const id = row.querySelector('.table__content-column-first').textContent;
-            fetch(`${API_URL}api/goods/${id}`);
+            editingId = fetch(`${API_URL}api/goods/${id}`);
+            console.log(`editingId ${editingId}`);
             form.addEventListener('submit', e => {
                 e.preventDefault();
-
                 /* sendData({
                      title: form.title.value,
                      body: form.description.value,

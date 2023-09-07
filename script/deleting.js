@@ -1,7 +1,6 @@
 import calculateTotalSum from "./utilities.js";
 import { deleteGoodItem, removeItem } from "./data.js";
 
-
 const deleteRow = async (table) => {
     table.addEventListener('click', (e) => {
         const target = e.target;

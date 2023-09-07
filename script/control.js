@@ -51,6 +51,7 @@ export const formControl = (form, table, closeModal) => {
             body: JSON.stringify(newGood)
         }).then(response => {
             if (response.status === 200 || response.status === 201) {
+                // fetch(`${API_URL}api/goods`);
                 addGoodPage(newGood, table);
                 addGoodItem(newGood);
                 calculateTotalSum();
