@@ -8,10 +8,10 @@ const deleteRow = async (table) => {
         if (delCart) {
             const row = delCart.closest('.table__content-row');
             const id = row.querySelector('.table__content-column-first').textContent;
-            deleteGoodItem(id);
+            const data = deleteGoodItem(id);
             removeItem(id);
             target.closest('.table__content-row').remove();
-            calculateTotalSum();
+            calculateTotalSum(data);
         };
     });
 };

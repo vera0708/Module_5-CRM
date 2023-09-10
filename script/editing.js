@@ -24,8 +24,9 @@ const editRow = async (form, table, closeModal) => {
         if (editCart) {
             const row = editCart.closest('.table__content-row');
             const id = row.querySelector('.table__content-column-first').textContent;
-            editingId = fetch(`${API_URL}api/goods/${id}`);
+            const editingId = fetch(`${API_URL}api/goods/${id}`);
             console.log(`editingId ${editingId}`);
+
             form.addEventListener('submit', e => {
                 e.preventDefault();
                 /* sendData({

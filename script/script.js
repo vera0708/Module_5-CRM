@@ -10,8 +10,9 @@ import editRow from "./editing.js";
     const init = async (selectorApp) => {
         const app = document.querySelector(selectorApp);
         const { table, thead, btnOpenForm, overlay, form } = renderGoodTable(app);
-        renderGoods(table, await getData());
-        calculateTotalSum(table);
+        const data = await getData();
+        renderGoods(table, data);
+        calculateTotalSum(data);
         deleteRow(table);
         openBtnImg(table);
         const { closeModal } = modalControl(btnOpenForm, overlay);

@@ -1,12 +1,13 @@
-import { getData } from "./data.js";
+// import { getData } from "./data.js";
 
-const calculateTotalSum = async () => {
+const calculateTotalSum = async (data) => {
     const pSum = document.querySelector('.main-table__total-info__sum');
     let totalSum = 0;
-    const data = await getData();
-    data.forEach(({ price, count }) => {
+
+    await data.forEach(({ price, count }) => {
         totalSum += price * count;
     });
+    console.log('рассчитывается data в calculateSum:');
 
     pSum.textContent = totalSum.toLocaleString('ru');
     return pSum.textContent;

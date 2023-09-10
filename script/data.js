@@ -15,8 +15,9 @@ export const getData = async () => {
 };
 
 export const addGoodItem = async (good) => {
-    const goods = await getData();
-    goods.push(good);
+    const data = await getData();
+    data.push(good);
+    return data;
 };
 
 export const addGoodPage = (good, table) => {
@@ -30,6 +31,7 @@ export const deleteGoodItem = async (goodId) => {
             data.splice([i], 1);
         };
     };
+    return data;
 };
 
 export const removeItem = async (goodId) => {

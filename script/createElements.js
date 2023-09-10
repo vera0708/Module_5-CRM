@@ -275,6 +275,8 @@ export const createForm = () => {
 };
 
 export const createModalError = () => {
+    const overlay = document.createElement('div');
+    overlay.classList.add('modal', 'modal-overlay');
     const modalError = document.createElement('div');
     modalError.classList.add('modal-error');
     modalError.insertAdjacentHTML('beforeend', `
@@ -294,4 +296,5 @@ export const createModalError = () => {
     btnErrorClose.type = 'button';
 
     modalError.append(btnErrorClose);
+    overlay.append(modalError);
 }

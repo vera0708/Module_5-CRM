@@ -1,4 +1,4 @@
-import { addGoodItem, addGoodPage } from "./data.js";
+import { addGoodItem, addGoodPage, getData } from "./data.js";
 import calculateTotalSum from "./utilities.js";
 import { API_URL } from "./const.js";
 import { createModalError } from "./createElements.js";
@@ -48,13 +48,15 @@ export const formControl = (form, table, closeModal) => {
 
         fetch(`${API_URL}api/goods`, {
             method: 'POST',
-            body: JSON.stringify(newGood)
+            body: JSON.stringify(newGood),
         }).then(response => {
             if (response.status === 200 || response.status === 201) {
-                // fetch(`${API_URL}api/goods`);
+                /*const goods = getData();
+                  const newGoodId = goods.map(good => good.title === newGood.title);
+                 console.log('newGoodId = ', newGoodId);*/
+                const data = addGoodItem(newGood);
+                calculateTotalSum(data);
                 addGoodPage(newGood, table);
-                addGoodItem(newGood);
-                calculateTotalSum();
                 form.reset();
                 closeModal();
                 return response.json()
@@ -67,11 +69,12 @@ export const formControl = (form, table, closeModal) => {
                 form.reset()
             })
             .catch(error => {
-                if (response.status === 422 || response.status === 404 || Math.round(response.status / 100) === 5) {
-                    alert('Произошла ошибка, статус ' + error.message);
-                } else {
-                    createModalError();
-                }
+                /* if (response.status === 422 || response.status === 404 || Math.round(response.status / 100) === 5) {
+                     alert('Произошла ошибка, статус ' + error.message);
+                 } else {*/
+                console.log(error);
+                createModalError();
+                // }
             });
     });
 };
