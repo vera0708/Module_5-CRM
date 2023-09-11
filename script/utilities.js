@@ -7,7 +7,6 @@ const calculateTotalSum = (data) => {
     data.forEach(({ price, count }) => {
         totalSum += price * count;
     });
-    console.log('рассчитывается data в calculateSum:');
 
     pSum.textContent = totalSum.toLocaleString('ru');
     return pSum.textContent;

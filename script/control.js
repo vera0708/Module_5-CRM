@@ -51,7 +51,7 @@ export const formControl = (form, table, closeModal) => {
                 body: JSON.stringify(newGood),
             });
 
-            if (response.status !== 200 && response.status !== 201) {
+            if (!response.ok) {
                 throw new Error(response.status);
             }
 

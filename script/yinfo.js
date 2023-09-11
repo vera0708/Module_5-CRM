@@ -1,4 +1,10 @@
-/*  fetch('https://persistent-mangrove-fountain.glitch.me/api/goods')
+/*  
+ проверка есть ли discount
+ if (editingGood.discount !== 0 && editingGood.discount !== "") {
+    checkbox.setAttribute("checked", "");
+    input.disabled = false;
+
+fetch('https://persistent-mangrove-fountain.glitch.me/api/goods')
 
 fetch('http://localhost:3000/api/goods', {
     method: 'POST',

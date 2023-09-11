@@ -36,6 +36,9 @@ export const deleteGoodItem = async (goodId) => {
 
 export const removeItem = async (goodId) => {
     await fetch(`${API_URL}api/goods/${goodId}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+        },
     });
 };
