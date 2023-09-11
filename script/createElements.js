@@ -184,9 +184,8 @@ export const createForm = () => {
     form.classList.add('form', 'modal__form');
     form.insertAdjacentHTML('beforeend', `
             <div class="modal__title-block">
-                <h2 class="modal__title modal__title-add  visually-hidden">Добавить товар</h2>
-                <h2 class="modal__title modal__title-change">Изменить товар</h2>
-                <p class="modal__title-text">id:<span class="modal__title-id">201910241</span> </p>
+                <h2 class="modal__title modal__title-add">Добавить товар</h2>
+                <p class="modal__title-text visually-hidden">id:<span class="modal__title-id">201910241</span> </p>
             </div>
             <fieldset class="form__box box">
                 <label class="box__label box__label-name">
@@ -275,10 +274,11 @@ export const createForm = () => {
 };
 
 export const createModalError = () => {
+    const form = document.querySelector('.modal');
     const overlay = document.createElement('div');
-    overlay.classList.add('modal', 'modal-overlay');
+    overlay.classList.add('modal-overlay', 'is-visible');
     const modalError = document.createElement('div');
-    modalError.classList.add('modal-error');
+    modalError.classList.add('modal-error', 'is-visible');
     modalError.insertAdjacentHTML('beforeend', `
          <svg class="modal-error__img" width="94" height="94" viewBox="0 0 94 94" fill="none"
                 xmlns="http://www.w3.org/2000/svg">
@@ -295,6 +295,12 @@ export const createModalError = () => {
                 </svg>`;
     btnErrorClose.type = 'button';
 
+    btnErrorClose.addEventListener('click', () => {
+        overlay.classList.remove('is-visible');
+    });
+
     modalError.append(btnErrorClose);
     overlay.append(modalError);
+
+    form.append(overlay);
 }

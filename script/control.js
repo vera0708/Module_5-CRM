@@ -1,4 +1,4 @@
-import { addGoodItem, addGoodPage, getData } from "./data.js";
+import { addGoodPage, getData } from "./data.js";
 import calculateTotalSum from "./utilities.js";
 import { API_URL } from "./const.js";
 import { createModalError } from "./createElements.js";
@@ -39,48 +39,45 @@ export const formControl = (form, table, closeModal) => {
         return formSum.textContent;
     };
 
-    form.addEventListener('submit', e => {
+    form.addEventListener('submit', async (e) => {
         e.preventDefault();
-        // Передаем данные из формы:
         const formData = new FormData(e.target);
         const newGood = Object.fromEntries(formData);
         console.log('newGood: ', newGood);
 
-        fetch(`${API_URL}api/goods`, {
-            method: 'POST',
-            body: JSON.stringify(newGood),
-        }).then(response => {
-            if (response.status === 200 || response.status === 201) {
-                /*const goods = getData();
-                  const newGoodId = goods.map(good => good.title === newGood.title);
-                 console.log('newGoodId = ', newGoodId);*/
-                const data = addGoodItem(newGood);
-                calculateTotalSum(data);
-                addGoodPage(newGood, table);
-                form.reset();
-                closeModal();
-                return response.json()
-            } else {
-                throw new Error(response.status)
-            }
-        })
-            .then(newGood => {
-                alert(`Товар ${newGood.title} успешно добавлен в таблицу`);
-                form.reset()
-            })
-            .catch(error => {
-                /* if (response.status === 422 || response.status === 404 || Math.round(response.status / 100) === 5) {
-                     alert('Произошла ошибка, статус ' + error.message);
-                 } else {*/
-                console.log(error);
-                createModalError();
-                // }
+        try {
+            const response = await fetch(`${API_URL}api/goods`, {
+                method: 'POST',
+                body: JSON.stringify(newGood),
             });
+
+            if (response.status !== 200 && response.status !== 201) {
+                throw new Error(response.status);
+            }
+
+            const receivedGood = await response.json();
+
+            const data = await getData();
+            calculateTotalSum(data);
+            addGoodPage(receivedGood, table);
+            closeModal();
+            alert(`Товар ${receivedGood.title} успешно добавлен в таблицу`);
+            form.reset();
+
+        } catch (error) {
+            // if (errors.message === 422 || errors.message === 404 || Math.round(errors.message / 100) === 5) {
+            //     alert('Произошла ошибка на сервере, статус ' + errors.message);
+            // } else {
+            console.log(`Ошибка- ${error.message}`, error);
+            createModalError();
+            // }
+        }
     });
 };
 
 export const modalControl = (btnOpenForm, overlay) => {
     const openModal = () => {
+        console.log('overlay из openModal', overlay)
         overlay.classList.add('is-visible');
     }
 

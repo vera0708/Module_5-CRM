@@ -14,11 +14,11 @@ export const getData = async () => {
     return goods;
 };
 
-export const addGoodItem = async (good) => {
+/*export const addGoodItem = async (good) => {
     const data = await getData();
     data.push(good);
     return data;
-};
+};*/
 
 export const addGoodPage = (good, table) => {
     table.append(createRow(good));
@@ -37,5 +37,5 @@ export const deleteGoodItem = async (goodId) => {
 export const removeItem = async (goodId) => {
     await fetch(`${API_URL}api/goods/${goodId}`, {
         method: 'DELETE'
-    })
+    });
 };
