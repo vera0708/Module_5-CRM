@@ -1,6 +1,7 @@
 import calculateTotalSum from "./utilities.js";
 import { API_URL } from "./const.js";
 import { createModalError } from "./createElements.js";
+import { editGood } from "./data.js";
 
 const fillForm = async (form, editingGood) => {
     const titleForm = document.querySelector('.modal__title');
@@ -43,18 +44,7 @@ const editRow = async (form, table, closeModal) => {
             form.addEventListener('submit', async (e) => {
                 e.preventDefault();
                 try {
-                    const response = await fetch(`${API_URL}api/goods/${editingGoodId}`, {
-                        method: 'PATCH',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify(editingGood),
-                    });
-
-                    if (!response.ok) {
-                        throw new Error(response.status);
-                    }
-
+                    editGood(editingGood);
                     console.log(`Товар ${editingGood.title} успешно отредактирован`);
                     const data = await getData();
                     calculateTotalSum(data);

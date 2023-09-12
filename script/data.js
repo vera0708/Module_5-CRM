@@ -8,23 +8,32 @@ import { API_URL } from "./const.js";
 };*/
 
 export const getData = async () => {
-    const result = await fetch(`${API_URL}api/goods`);
-    const goods = await result.json();
+    const response = await fetch(`${API_URL}api/goods`);
+    const goods = await response.json();
     console.log('getData = ', goods);
     return goods;
 };
 
-/*export const addGoodItem = async (good) => {
-    const data = await getData();
-    data.push(good);
-    return data;
-};*/
+export const postGood = async (data) => {
+    const response = await fetch(`${API_URL}api/goods`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    });
+
+    if (response.ok) {
+        return response.json()
+    }
+    throw new Error(response.status);
+};
 
 export const addGoodPage = (good, table) => {
     table.append(createRow(good));
 };
 
-export const deleteGoodItem = async (goodId) => {
+/*export const deleteGoodItem = async (goodId) => {
     const data = await getData();
     for (let i = 0; i < data.length; i++) {
         if (goodId === data[i].id.toString()) {
@@ -32,13 +41,32 @@ export const deleteGoodItem = async (goodId) => {
         };
     };
     return data;
-};
+};*/
 
-export const removeItem = async (goodId) => {
-    await fetch(`${API_URL}api/goods/${goodId}`, {
+export const removeGood = async (goodId) => {
+    const response = await fetch(`${API_URL}api/goods/${goodId}`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
         },
     });
+    if (response.ok) {
+        return response.json()
+    }
+    throw new Error(response.status);
 };
+
+export const editGood = async (editingGood) => {
+    const response = await fetch(`${API_URL}api/goods/${editingGood.id}`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(editingGood),
+    });
+
+    if (response.ok) {
+        return response.json()
+    }
+    throw new Error(response.status);
+}

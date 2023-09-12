@@ -1,5 +1,5 @@
 import calculateTotalSum from "./utilities.js";
-import { deleteGoodItem, removeItem, getData } from "./data.js";
+import { removeGood, getData } from "./data.js";
 
 const deleteRow = (table) => {
     table.addEventListener('click', async (e) => {
@@ -8,7 +8,7 @@ const deleteRow = (table) => {
         if (delCart) {
             const row = delCart.closest('.table__content-row');
             const id = row.querySelector('.table__content-column-first').textContent;
-            await removeItem(id);
+            await removeGood(id);
             const data = await getData(id);
             target.closest('.table__content-row').remove();
             calculateTotalSum(data);

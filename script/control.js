@@ -1,4 +1,4 @@
-import { addGoodPage, getData } from "./data.js";
+import { addGoodPage, getData, postGood } from "./data.js";
 import calculateTotalSum from "./utilities.js";
 import { API_URL } from "./const.js";
 import { createModalError } from "./createElements.js";
@@ -46,14 +46,7 @@ export const formControl = (form, table, closeModal) => {
         console.log('newGood: ', newGood);
 
         try {
-            const response = await fetch(`${API_URL}api/goods`, {
-                method: 'POST',
-                body: JSON.stringify(newGood),
-            });
-
-            if (!response.ok) {
-                throw new Error(response.status);
-            }
+            postGood(newGood);
 
             const receivedGood = await response.json();
 
@@ -77,7 +70,6 @@ export const formControl = (form, table, closeModal) => {
 
 export const modalControl = (btnOpenForm, overlay) => {
     const openModal = () => {
-        console.log('overlay из openModal', overlay)
         overlay.classList.add('is-visible');
     }
 
