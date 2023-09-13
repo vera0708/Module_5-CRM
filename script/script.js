@@ -2,7 +2,7 @@ import { formControl, modalControl, openBtnImg } from "./control.js";
 import deleteRow from "./deleting.js";
 import { renderGoodTable, renderGoods } from "./renders.js";
 import sortRows from "./sorting.js";
-import calculateTotalSum from "./utilities.js";
+import { calculateTotalSum } from "./utilities.js";
 import { getData } from "./data.js";
 import editRow from "./editing.js";
 
@@ -12,12 +12,12 @@ import editRow from "./editing.js";
         const { table, thead, btnOpenForm, overlay, form } = renderGoodTable(app);
         const data = await getData();
         renderGoods(table, data);
-        calculateTotalSum(data);
+        calculateTotalSum();
         deleteRow(table);
         openBtnImg(table);
         const { closeModal } = modalControl(btnOpenForm, overlay);
         formControl(form, table, closeModal);
-        editRow(form, table, closeModal);
+        // editRow(form, table, closeModal);
         sortRows(thead, table);
     }
     window.goodShopInit = init;

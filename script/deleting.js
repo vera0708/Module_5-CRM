@@ -1,4 +1,4 @@
-import calculateTotalSum from "./utilities.js";
+import { calculateTotalSum } from "./utilities.js";
 import { removeGood, getData } from "./data.js";
 
 const deleteRow = (table) => {
@@ -11,7 +11,7 @@ const deleteRow = (table) => {
             await removeGood(id);
             const data = await getData(id);
             target.closest('.table__content-row').remove();
-            calculateTotalSum(data);
+            calculateTotalSum();
         };
     });
 };

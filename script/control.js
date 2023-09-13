@@ -1,5 +1,5 @@
 import { addGoodPage, getData, postGood } from "./data.js";
-import calculateTotalSum from "./utilities.js";
+import { calculateTotalSum } from "./utilities.js";
 import { API_URL } from "./const.js";
 import { createModalError } from "./createElements.js";
 
@@ -40,18 +40,21 @@ export const formControl = (form, table, closeModal) => {
     };
 
     form.addEventListener('submit', async (e) => {
+        if (form.title === 'Добавить товар') {
+            console.log('добавить', form);
+        };
         e.preventDefault();
         const formData = new FormData(e.target);
         const newGood = Object.fromEntries(formData);
         console.log('newGood: ', newGood);
 
         try {
-            postGood(newGood);
+            const receivedGood = await postGood(newGood);
+            console.log('receivedGood: ', receivedGood);
+            // const receivedGood = await response.json();
 
-            const receivedGood = await response.json();
-
-            const data = await getData();
-            calculateTotalSum(data);
+            /* const data = await getData();
+             calculateTotalSum(data);*/
             addGoodPage(receivedGood, table);
             closeModal();
             alert(`Товар ${receivedGood.title} успешно добавлен в таблицу`);

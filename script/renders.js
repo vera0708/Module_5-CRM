@@ -31,3 +31,21 @@ export const renderGoodTable = (app) => {
         form,
     }
 };
+
+export const renderEditingRow = (goodRow, { id, title, category, units, price, count }) => {
+    goodRow.innerHTML = `
+    <td class="table__content-column table__content-column-first">${id}</td>
+    <td class="table__content-column table__content-column-second">${title}</td>
+    <td class="table__content-column table__content-column-third">${category}</td>
+    <td class="table__content-column table__content-column-fourth">${units}</td>
+    <td class="table__content-column table__content-column-fifth">${count}</td>
+    <td class="table__content-column table__content-column-sixth">${price}</td>
+    <td class="table__content-column table__content-column-seventh">${count * price}</td>
+    <td class="table__content-column table__content-column-eighth">
+        <button class="eighth-column_icon eighth-column_icon-img" data-pic="url"></button>
+        <button class="eighth-column_icon eighth-column_icon-edit"></button>
+        <button class="eighth-column_icon eighth-column_icon-del"></button>
+    </td>
+        `;
+    return goodRow;
+}

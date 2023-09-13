@@ -1,3 +1,5 @@
+import { currencyFormatRUB } from "./utilities.js";
+
 export const createMain = () => {
     const main = document.createElement('div');
     main.classList.add('main-table');
@@ -119,7 +121,7 @@ export const createRow = (good) => {
 
     const tdCost = document.createElement('td');
     tdCost.classList.add('table__content-column-seventh');
-    tdCost.textContent = `${good.count * good.price}`.toLocaleString('ru');
+    tdCost.textContent = `${currencyFormatRUB(good.count * good.price)}`;
 
     const tdIcons = document.createElement('td');
     tdIcons.classList.add('table__content-column-eighth');
@@ -185,6 +187,7 @@ export const createForm = () => {
     form.insertAdjacentHTML('beforeend', `
             <div class="modal__title-block">
                 <h2 class="modal__title modal__title-add">Добавить товар</h2>
+                <h2 class="modal__title modal__title-change visually-hidden">Изменить товар</h2>
                 <p class="modal__title-text visually-hidden">id:<span class="modal__title-id">201910241</span> </p>
             </div>
             <fieldset class="form__box box">
@@ -274,9 +277,7 @@ export const createForm = () => {
 };
 
 export const createModalError = () => {
-    const form = document.querySelector('.modal');
-    const overlay = document.createElement('div');
-    overlay.classList.add('modal-overlay', 'is-visible');
+    const modal = document.querySelector('.modal');
     const modalError = document.createElement('div');
     modalError.classList.add('modal-error', 'is-visible');
     modalError.insertAdjacentHTML('beforeend', `
@@ -300,7 +301,5 @@ export const createModalError = () => {
     });
 
     modalError.append(btnErrorClose);
-    overlay.append(modalError);
-
-    form.append(overlay);
+    modal.append(modalError);
 }

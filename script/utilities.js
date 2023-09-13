@@ -1,14 +1,23 @@
 // import { getData } from "./data.js";
 
-const calculateTotalSum = (data) => {
+export const calculateTotalSum = () => {
+    const goodPrices = document.querySelectorAll('.table__content-column-seventh');
     const pSum = document.querySelector('.main-table__total-info__sum');
+
     let totalSum = 0;
+    for (let i = 1; i < goodPrices.length; i++) {
+        totalSum = +goodPrices[i].textContent + totalSum;
+    };
 
-    data.forEach(({ price, count }) => {
-        totalSum += price * count;
-    });
-
-    pSum.textContent = totalSum.toLocaleString('ru');
+    pSum.textContent = currencyFormatRUB(totalSum);
+    // pSum.textContent = totalSum.toLocaleString('ru');
     return pSum.textContent;
 };
-export default calculateTotalSum;
+
+export const currencyFormatRUB = (num) => {
+    return new Intl.NumberFormat('ru-RU', {
+        style: 'currency',
+        currency: 'RUB',
+        maximumFractionDigits: 0,
+    }).format(num)
+}
