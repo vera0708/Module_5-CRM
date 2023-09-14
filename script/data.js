@@ -7,8 +7,8 @@ import { API_URL } from "./const.js";
     goods = value;
 };*/
 
-export const getData = async () => {
-    const response = await fetch(`${API_URL}api/goods`);
+export const getData = async (id) => {
+    const response = await fetch(`${API_URL}api/goods/${id ? id : ''}`);
     const goods = await response.json();
     console.log('getData = ', goods);
     return goods;
@@ -43,19 +43,6 @@ export const addGoodPage = (good, table) => {
     return data;
 };*/
 
-export const removeGood = async (goodId) => {
-    const response = await fetch(`${API_URL}api/goods/${goodId}`, {
-        method: 'DELETE',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    });
-    if (response.ok) {
-        return response.json()
-    }
-    throw new Error(response.status);
-};
-
 export const editGood = async (editingGood) => {
     const response = await fetch(`${API_URL}api/goods/${editingGood.id}`, {
         method: 'PATCH',
@@ -69,4 +56,19 @@ export const editGood = async (editingGood) => {
         return response.json()
     }
     throw new Error(response.status);
-}
+};
+
+export const removeGood = async (goodId) => {
+    const response = await fetch(`${API_URL}api/goods/${goodId}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    });
+    if (response.ok) {
+        return response.json()
+    }
+    throw new Error(response.status);
+};
+
+

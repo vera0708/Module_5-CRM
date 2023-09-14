@@ -121,7 +121,7 @@ export const createRow = (good) => {
 
     const tdCost = document.createElement('td');
     tdCost.classList.add('table__content-column-seventh');
-    tdCost.textContent = `${currencyFormatRUB(good.count * good.price)}`;
+    tdCost.textContent = `${good.count * good.price}`;
 
     const tdIcons = document.createElement('td');
     tdIcons.classList.add('table__content-column-eighth');

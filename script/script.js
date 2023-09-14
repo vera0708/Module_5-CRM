@@ -15,9 +15,9 @@ import editRow from "./editing.js";
         calculateTotalSum();
         deleteRow(table);
         openBtnImg(table);
-        const { closeModal } = modalControl(btnOpenForm, overlay);
+        const { closeModal } = modalControl(btnOpenForm);
         formControl(form, table, closeModal);
-        // editRow(form, table, closeModal);
+        editRow(table);
         sortRows(thead, table);
     }
     window.goodShopInit = init;
