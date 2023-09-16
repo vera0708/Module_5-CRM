@@ -188,7 +188,7 @@ export const createForm = () => {
             <div class="modal__title-block">
                 <h2 class="modal__title modal__title-add">Добавить товар</h2>
                 <h2 class="modal__title modal__title-change visually-hidden">Изменить товар</h2>
-                <p class="modal__title-text visually-hidden">id:<span class="modal__title-id">201910241</span> </p>
+                <p class="modal__title-text visually-hidden">id:<span class="modal__title-id"></span> </p>
             </div>
             <fieldset class="form__box box">
                 <label class="box__label box__label-name">
@@ -297,7 +297,7 @@ export const createModalError = () => {
     btnErrorClose.type = 'button';
 
     btnErrorClose.addEventListener('click', () => {
-        overlay.classList.remove('is-visible');
+        modalError.classList.remove('is-visible');
     });
 
     modalError.append(btnErrorClose);

@@ -11,6 +11,11 @@
     opacity: 0;
 }
 
+.modal-error.is-visible {
+    opacity: 1;
+    visibility: visible;
+}
+
 .modal.is-visible {
     opacity: 1;
     visibility: visible;

@@ -1,17 +1,22 @@
-import { modalControl } from "./control.js";
-import { editGood } from "./data.js";
+import { openModal } from "./control.js";
+import { getGood } from "./data.js";
 
 const editRow = async (table) => {
     table.addEventListener('click', async (e) => {
         const target = e.target;
         const editCart = target.closest('.eighth-column_icon-edit');
-        console.log('editCart: ', editCart)
+
+        if (!editCart) {
+            return;
+        }
+
+        console.log('editCart: ', editCart);
+
         const row = editCart.closest('.table__content-row');
-        const editingGood = await editGood(row);
-        console.log('row: ', row)
         const idRow = row.querySelector('.table__content-column-first').textContent;
-        console.log('idRow: ', idRow)
-        modalControl(editCart, editingGood);
+        const editingGood = await getGood(idRow);
+
+        openModal(editingGood);
     });
 };
 

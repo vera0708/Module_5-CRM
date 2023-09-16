@@ -1,4 +1,4 @@
-import { formControl, modalControl, openBtnImg } from "./control.js";
+import { formControl, openModalControl, openBtnImg } from "./control.js";
 import deleteRow from "./deleting.js";
 import { renderGoodTable, renderGoods } from "./renders.js";
 import sortRows from "./sorting.js";
@@ -15,9 +15,9 @@ import editRow from "./editing.js";
         calculateTotalSum();
         deleteRow(table);
         openBtnImg(table);
-        modalControl(overlay, form, btnOpenForm);
+        openModalControl(overlay, form, btnOpenForm);
         formControl(form, table);
-        // editRow(table);
+        editRow(table);
         sortRows(thead, table);
     }
     window.goodShopInit = init;

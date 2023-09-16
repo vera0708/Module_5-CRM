@@ -3,12 +3,18 @@ import { API_URL } from "./const.js";
 
 // https://persistent-mangrove-fountain.glitch.me/
 
-export const getData = async (id) => {
-    const response = await fetch(`${API_URL}api/goods/${id ? id : ''}`);
+export const getData = async () => {
+    const response = await fetch(`${API_URL}api/goods`);
     const goods = await response.json();
     console.log('getData = ', goods);
     return goods;
 };
+
+export const getGood = async (id) => {
+    const response = await fetch(`${API_URL}api/goods/${id}`);
+    const goods = await response.json();
+    return goods;
+}
 
 export const postGood = async (data) => {
     const response = await fetch(`${API_URL}api/goods`, {
@@ -29,8 +35,8 @@ export const addGoodPage = (good, table) => {
     table.append(createRow(good));
 };
 
-export const editGood = async (editingGood) => {
-    const response = await fetch(`${API_URL}api/goods/${editingGood.id}`, {
+export const editGood = async (editingId, editingGood) => {
+    const response = await fetch(`${API_URL}api/goods/${editingId}`, {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',
@@ -39,7 +45,7 @@ export const editGood = async (editingGood) => {
     });
 
     if (response.ok) {
-        return response.json()
+        return response.json();
     }
     throw new Error(response.status);
 };

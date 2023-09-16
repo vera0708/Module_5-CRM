@@ -8,8 +8,7 @@ const deleteRow = (table) => {
         if (delCart) {
             const row = delCart.closest('.table__content-row');
             const id = row.querySelector('.table__content-column-first').textContent;
-            const dataDel = await removeGood(id);
-            console.log('dataDel: ', dataDel);
+            await removeGood(id);
             const data = await getData();
             console.log('data: ', data);
             target.closest('.table__content-row').remove();
