@@ -3,7 +3,23 @@ import { renderEditingRow } from "./renders.js";
 import { calculateTotalSum } from "./utilities.js";
 import { createModalError } from "./createElements.js";
 
-export const formControl = (form, table, closeModal) => {
+const openModal = (editingGood) => {
+    const overlay = document.querySelector('.modal-overlay');
+    const form = document.querySelector('.form');
+    if (editingGood) {
+        fillForm(form, editingGood);
+    }
+    overlay.classList.add('is-visible');
+};
+
+export const closeModal = () => {
+    const overlay = document.querySelector('.modal-overlay');
+    const form = document.querySelector('.form');
+    overlay.classList.remove('is-visible');
+    form.reset();
+};
+
+export const formControl = (form, table) => {
     const formSum = form.querySelector('.main-table__total-info__sum');
     const priceAddedGood = form.querySelector("input[name='price']");
     const countAddedGood = form.querySelector("input[name='count']");
@@ -51,7 +67,6 @@ export const formControl = (form, table, closeModal) => {
             alert(`Товар ${receivedGood.title} успешно изменен`);
         } else {
             const receivedGood = await postGood(newGood);
-            console.log('receivedGood: ', receivedGood);
             addGoodPage(receivedGood, table);
             alert(`Товар ${receivedGood.title} успешно добавлен в таблицу`);
         }
@@ -71,18 +86,6 @@ export const formControl = (form, table, closeModal) => {
     });
 };
 
-const openModal = (overlay, form, editingGood) => {
-    if (editingGood) {
-        fillForm(form, editingGood);
-    }
-    overlay.classList.add('is-visible');
-};
-
-export const closeModal = (overlay, form) => {
-    overlay.classList.remove('is-visible');
-    form.reset();
-}
-
 const fillForm = async (form, editingGood) => {
     const { title, category, description, count, discount, price, units } = await getData(editingGood.id);
     form.title.value = title;
@@ -94,14 +97,12 @@ const fillForm = async (form, editingGood) => {
     form.units.value = units;
 };
 
-export const modalControl = (btnOpenForm, editingGood) => {
-    const overlay = document.querySelector('.modal-overlay');
+export const modalControl = (overlay, form, btnOpenForm, editingGood) => {
     const btnAddGood = document.querySelector('.table__button-submit');
-    const form = document.querySelector('.form');
 
     if (btnAddGood === btnOpenForm) {
         btnOpenForm.addEventListener('click', () => {
-            openModal(overlay, form);
+            openModal();
         });
     } else {
         const titleForm = document.querySelector('.modal__title');
@@ -109,19 +110,19 @@ export const modalControl = (btnOpenForm, editingGood) => {
         const idText = document.querySelector('.modal__title-text');
         idText.classList.remove('visually-hidden');
         idText.classList.add('is-visible');
-        const id = document.querySelector('.modal__title-id');
-        id.textContent = `${editingGood.id}`;
+        const idEdit = document.querySelector('.modal__title-id');
+        idEdit.textContent = `${editingGood.id}`;
         const btnSubmitForm = form.querySelector('.form__button');
         console.log(btnSubmitForm);
         btnSubmitForm.textContent = 'Изменить товар';
-        openModal(overlay, form, editingGood);
+        openModal(editingGood);
     }
 
     overlay.addEventListener('click', (e) => {
         const target = e.target;
         if (target === overlay ||
             target.closest('.modal__close')) {
-            closeModal(overlay);
+            closeModal();
         };
     });
 

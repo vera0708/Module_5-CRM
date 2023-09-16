@@ -3,10 +3,6 @@ import { API_URL } from "./const.js";
 
 // https://persistent-mangrove-fountain.glitch.me/
 
-/*export const setData = (value) => { 
-    goods = value;
-};*/
-
 export const getData = async (id) => {
     const response = await fetch(`${API_URL}api/goods/${id ? id : ''}`);
     const goods = await response.json();
@@ -32,16 +28,6 @@ export const postGood = async (data) => {
 export const addGoodPage = (good, table) => {
     table.append(createRow(good));
 };
-
-/*export const deleteGoodItem = async (goodId) => {
-    const data = await getData();
-    for (let i = 0; i < data.length; i++) {
-        if (goodId === data[i].id.toString()) {
-            data.splice([i], 1);
-        };
-    };
-    return data;
-};*/
 
 export const editGood = async (editingGood) => {
     const response = await fetch(`${API_URL}api/goods/${editingGood.id}`, {
@@ -71,4 +57,13 @@ export const removeGood = async (goodId) => {
     throw new Error(response.status);
 };
 
+/*export const deleteGoodItem = async (goodId) => {
+    const data = await getData();
+    for (let i = 0; i < data.length; i++) {
+        if (goodId === data[i].id.toString()) {
+            data.splice([i], 1);
+        };
+    };
+    return data;
+};*/
 

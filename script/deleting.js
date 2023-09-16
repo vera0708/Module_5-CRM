@@ -8,8 +8,10 @@ const deleteRow = (table) => {
         if (delCart) {
             const row = delCart.closest('.table__content-row');
             const id = row.querySelector('.table__content-column-first').textContent;
-            await removeGood(id);
-            const data = await getData(id);
+            const dataDel = await removeGood(id);
+            console.log('dataDel: ', dataDel);
+            const data = await getData();
+            console.log('data: ', data);
             target.closest('.table__content-row').remove();
             calculateTotalSum();
         };
