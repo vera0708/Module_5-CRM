@@ -9,9 +9,6 @@ const editRow = async (table) => {
         if (!editCart) {
             return;
         }
-
-        console.log('editCart: ', editCart);
-
         const row = editCart.closest('.table__content-row');
         const idRow = row.querySelector('.table__content-column-first').textContent;
         const editingGood = await getGood(idRow);

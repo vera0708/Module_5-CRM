@@ -85,20 +85,17 @@ export const formControl = (form, table) => {
         e.preventDefault();
         const formData = new FormData(e.target);
         const newGood = Object.fromEntries(formData);
-        console.log('newGood: ', newGood);
-
-
+        // console.log('newGood: ', newGood);
         const editingId = form.querySelector('.modal__title-id').textContent?.trim();;
 
-        console.log(editingId)
         try {
             if (editingId) {
                 const receivedGood = await editGood(editingId, newGood);
 
-                const trs = document.querySelectorAll('.table__content-row');
+                const rows = document.querySelectorAll('.table__content-row');
 
-                trs.forEach(tr => {
-                    const trId = tr.querySelector('.table__content-column-first')?.textC.textContent?.trim();
+                rows.forEach(tr => {
+                    const trId = tr.querySelector('.table__content-column-first')?.textContent?.trim();
 
                     if (trId === editingId) {
                         renderEditingRow(tr, receivedGood);
@@ -150,11 +147,11 @@ const adjustModalTexts = (editingGood, form) => {
 }
 
 const adjustForm = (form, editingGood = null) => {
-    const baseChangeGood = 'Изменить товар';
-    const baseCreateGood = 'Добавить товар';
+    const changeGood = 'Изменить товар';
+    const createGood = 'Добавить товар';
 
     const texts = {
-        title: !!editingGood ? baseChangeGood : baseCreateGood,
+        title: !!editingGood ? changeGood : createGood,
         id: !!editingGood ? editingGood.id : '',
     };
 
@@ -177,7 +174,7 @@ const adjustForm = (form, editingGood = null) => {
         idText.classList.remove('is-visible');
     }
 };
-export const openModalControl = (overlay, form, btnOpenForm, editingGood) => {
+export const openModalControl = (overlay, form, btnOpenForm) => {
     btnOpenForm.addEventListener('click', () => {
         openModal();
     });

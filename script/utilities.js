@@ -1,5 +1,3 @@
-// import { getData } from "./data.js";
-
 export const calculateTotalSum = () => {
     const goodPrices = document.querySelectorAll('.table__content-column-seventh');
     const pSum = document.querySelector('.main-table__total-info__sum');

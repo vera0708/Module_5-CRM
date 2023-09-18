@@ -10,7 +10,6 @@ const deleteRow = (table) => {
             const id = row.querySelector('.table__content-column-first').textContent;
             await removeGood(id);
             const data = await getData();
-            console.log('data: ', data);
             target.closest('.table__content-row').remove();
             calculateTotalSum();
         };

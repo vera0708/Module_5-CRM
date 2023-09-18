@@ -12,8 +12,8 @@ export const getData = async () => {
 
 export const getGood = async (id) => {
     const response = await fetch(`${API_URL}api/goods/${id}`);
-    const goods = await response.json();
-    return goods;
+    const good = await response.json();
+    return good;
 }
 
 export const postGood = async (data) => {
@@ -50,8 +50,8 @@ export const editGood = async (editingId, editingGood) => {
     throw new Error(response.status);
 };
 
-export const removeGood = async (goodId) => {
-    const response = await fetch(`${API_URL}api/goods/${goodId}`, {
+export const removeGood = async (id) => {
+    const response = await fetch(`${API_URL}api/goods/${id}`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
@@ -62,14 +62,3 @@ export const removeGood = async (goodId) => {
     }
     throw new Error(response.status);
 };
-
-/*export const deleteGoodItem = async (goodId) => {
-    const data = await getData();
-    for (let i = 0; i < data.length; i++) {
-        if (goodId === data[i].id.toString()) {
-            data.splice([i], 1);
-        };
-    };
-    return data;
-};*/
-
