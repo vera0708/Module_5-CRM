@@ -198,6 +198,7 @@ export const createForm = () => {
                 <label class="box__label box__label-category">
                     <span class="box__span">Категория</span>
                     <input class="box__input" type="text" name="category" required>
+                    <datalist id="category">      </datalist>
                 </label>
 
                 <label class="box__label box__label-units">

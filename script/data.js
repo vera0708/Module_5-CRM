@@ -61,3 +61,11 @@ export const removeGood = async (id) => {
     }
     throw new Error(response.status);
 };
+
+export const getCategory = async () => {
+    const response = await fetch(`${API_URL}api/category`);
+    if (response.ok) {
+        return response.json();
+    }
+    throw new Error(response.status);
+};

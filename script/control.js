@@ -1,7 +1,8 @@
-import { addGoodPage, editGood, postGood } from "./data.js";
+import { addGoodPage, editGood, getCategory, postGood } from "./data.js";
 import { renderEditingRow } from "./renders.js";
 import { calculateTotalSum, toBase64 } from "./utilities.js";
 import { createModalError } from "./createElements.js";
+import { API_URL } from "./const.js";
 
 export const openModal = (good = null) => {
     const overlay = document.querySelector('.modal-overlay');
@@ -50,6 +51,7 @@ export const formControl = (form, table) => {
     const priceAddedGood = form.querySelector("input[name='price']");
     const countAddedGood = form.querySelector("input[name='count']");
     const discountAddedGood = form.querySelector("input[name='discount']");
+    updateCategory();
 
     priceAddedGood.addEventListener('input', () => {
         sumGoodSum();
@@ -85,7 +87,16 @@ export const formControl = (form, table) => {
         e.preventDefault();
         const formData = new FormData(e.target);
         const newGood = Object.fromEntries(formData);
-        // console.log('newGood: ', newGood);
+
+        if (newGood.image.size > 1000000) {
+            console.log('image.size больше 1 Мб: ', newGood.image.size);
+        } else if (newGood.image.size) {
+            newGood.image = await toBase64(newGood.image);
+        } else {
+            delete newGood.image;
+        }
+
+
         const editingId = form.querySelector('.modal__title-id').textContent?.trim();;
 
         try {
@@ -111,6 +122,7 @@ export const formControl = (form, table) => {
 
             calculateTotalSum();
             closeModal();
+            updateCategory();
         } catch (error) {
 
             if (Number(error.message) === 422 || Number(error.message) === 404 || Math.round(Number(error.message) / 100) === 5) {
@@ -130,7 +142,8 @@ const fillForm = (good, form) => {
         count,
         discount,
         price,
-        units
+        units,
+        image
     } = good;
 
     form.title.value = title;
@@ -140,6 +153,7 @@ const fillForm = (good, form) => {
     form.discount.value = discount;
     form.price.value = price;
     form.units.value = units;
+    showPreview(`${API_URL}${image}`)
 };
 
 const adjustModalTexts = (editingGood, form) => {
@@ -153,6 +167,7 @@ const adjustForm = (form, editingGood = null) => {
     const texts = {
         title: !!editingGood ? changeGood : createGood,
         id: !!editingGood ? editingGood.id : '',
+        // image:  ?   :   ,
     };
 
     const titleForm = document.querySelector('.modal__title');
@@ -221,4 +236,16 @@ export const previewImage = (form) => {
             showPreview(src);
         }
     });
+};
+
+const updateCategory = async () => {
+    category.textContent = '';
+    const categoryList = await getCategory();
+    /*console.log('categoryList: ', categoryList);
+     const categoryOption = categoryList.map(categ => {
+         const option = document.createElement('option');
+         option.value = categ;
+         return option;
+     });*/
+    // category.append(...categoryOption);
 };
