@@ -1,10 +1,11 @@
-import { formControl, openModalControl, openBtnImg } from "./control.js";
+import { formControl, openModalControl, previewImage } from "./control.js";
 import deleteRow from "./deleting.js";
 import { renderGoodTable, renderGoods } from "./renders.js";
 import sortRows from "./sorting.js";
 import { calculateTotalSum } from "./utilities.js";
 import { getData } from "./data.js";
 import editRow from "./editing.js";
+import showImage from "./preview.js";
 
 {
     const init = async (selectorApp) => {
@@ -14,8 +15,9 @@ import editRow from "./editing.js";
         renderGoods(table, data);
         calculateTotalSum();
         deleteRow(table);
-        openBtnImg(table);
-        openModalControl(overlay, form, btnOpenForm);
+        showImage(table);
+        previewImage(form);
+        openModalControl(overlay, btnOpenForm);
         formControl(form, table);
         editRow(table);
         sortRows(thead, table);

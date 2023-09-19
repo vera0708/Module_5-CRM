@@ -6,7 +6,6 @@ import { API_URL } from "./const.js";
 export const getData = async () => {
     const response = await fetch(`${API_URL}api/goods`);
     const goods = await response.json();
-    console.log('getData = ', goods);
     return goods;
 };
 

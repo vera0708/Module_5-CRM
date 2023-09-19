@@ -232,12 +232,12 @@ export const createForm = () => {
                     <p class="form__img-notice__text">Изображение не должно превышать размер 1 Мб</p>
                 </div>
                 <label class="box__label-img">
-                    <span class="box__label-img-span">Добавить изображение</span>
-                    <input class="box__file visually-hidden" type="file" name="file" accept="image/jpg">
+                    <span class="box__label-img-span" >Добавить изображение</span>
+                    <input class="box__file visually-hidden" type="file" name="image" accept="image/jpg" tabindex="-1">
                 </label>
                 <div class="box__img">
-                    <img class="box__img-img visually-hidden" src="./img/modal-img.jpg" alt="Изображение товара">
-                    <img class="box__img-no-img">
+                    <img class="box__img-img" alt="Изображение товара">
+                    <img class="box__img-no-img visually-hidden">
                 </div>
             </fieldset>
         `);

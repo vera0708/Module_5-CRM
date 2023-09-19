@@ -243,6 +243,12 @@
     padding-top: 20px;
 }
 
+.box__img-img {
+    width: 200px;
+    height: 200px;
+    display: none;
+}
+
 .box__img-no-img {
     background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../img/modal-img.jpg');
     background-position: center;
@@ -250,7 +256,7 @@
     background-size: cover;
     width: 200px;
     height: 200px;
-    display: inline-block;
+    display: block;
 }
 
 .box__img::before {

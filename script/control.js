@@ -1,6 +1,6 @@
 import { addGoodPage, editGood, postGood } from "./data.js";
 import { renderEditingRow } from "./renders.js";
-import { calculateTotalSum } from "./utilities.js";
+import { calculateTotalSum, toBase64 } from "./utilities.js";
 import { createModalError } from "./createElements.js";
 
 export const openModal = (good = null) => {
@@ -35,8 +35,8 @@ export const closeModal = () => {
     const overlay = document.querySelector('.modal-overlay');
     const form = document.querySelector('.form');
     overlay.classList.remove('is-visible');
-
     formReset(form);
+    hidePreview();
 };
 
 const formReset = (form) => {
@@ -174,7 +174,7 @@ const adjustForm = (form, editingGood = null) => {
         idText.classList.remove('is-visible');
     }
 };
-export const openModalControl = (overlay, form, btnOpenForm) => {
+export const openModalControl = (overlay, btnOpenForm) => {
     btnOpenForm.addEventListener('click', () => {
         openModal();
     });
@@ -194,15 +194,31 @@ export const openModalControl = (overlay, form, btnOpenForm) => {
     });
 };
 
-export const openBtnImg = (table) => {
-    table.addEventListener('click', (e) => {
-        const target = e.target;
-        const btnImg = target.closest('.eighth-column_icon-img');
-        if (btnImg) {
-            let goodImg = btnImg.dataset.pic;
-            console.log('goodImg: ', goodImg);
-            goodImg = open('img/телефон-Xiomi.jpg', '', 'width=600, height=600');
-            goodImg.moveTo(screen.width / 2 - 300, screen.height / 2 - 300);
-        };
+export const showPreview = (src) => {
+    const preview = document.querySelector('.box__img-img');
+    preview.style.display = 'block';
+    preview.src = src;
+};
+
+export const hidePreview = () => {
+    const preview = document.querySelector('.box__img-img');
+    preview.style.display = '';
+    preview.src = '';
+};
+
+export const previewImage = (form) => {
+    // const imageFile = form.image;
+    const imageFile = document.querySelector('[name="image"]');
+    imageFile.addEventListener('change', async () => {
+        console.log('imageFile.files: ', imageFile.files);
+        if (imageFile.files.length) {
+            console.log(imageFile.files[0]);
+            /*  name: "unsplash_WHPsxhB4mWQ.png"
+                size: 68219
+                type: "image/png"
+                webkitRelativePath: ""             */
+            const src = await toBase64(imageFile.files[0]);
+            showPreview(src);
+        }
     });
 };
