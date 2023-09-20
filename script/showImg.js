@@ -1,19 +1,19 @@
-import { getData } from "./data.js";
+import { API_URL } from "./const.js";
+import { getGood } from "./data.js";
 
 const showImage = async (table) => {
     table.addEventListener('click', async (e) => {
         const target = e.target;
         const imageBtn = target.closest('.eighth-column_icon-img');
         if (imageBtn) {
-            console.log('imageBtn', imageBtn);
             const row = imageBtn.closest('.table__content-row');
-            const imageFile = row.image;
-            console.log('imageFile: ', imageFile);
             const id = row.querySelector('.table__content-column-first').textContent;
-
-            //    await removeGood(id);
-            const data = await getData();
-            console.log('данные при поиске изображения', data);
+            const data = await getGood(id);
+            const imageFile = data.image;
+            // console.log('imageFile: ', imageFile);
+            let goodImg = imageBtn.dataset.pic;
+            goodImg = open(`${API_URL}${imageFile}`, '', 'width=600, height=600');
+            goodImg.moveTo(screen.width / 2 - 300, screen.height / 2 - 300);
         };
     });
 };
@@ -23,6 +23,11 @@ export default showImage;
 id: "6300524222"
 image: "image/6300524222.jpg"
 --------------------
+   let goodImg = btnImg.dataset.pic;
+            console.log('goodImg: ', goodImg);
+            goodImg = open('img/телефон-Xiomi.jpg', '', 'width=600, height=600');
+            goodImg.moveTo(screen.width / 2 - 300, screen.height / 2 - 300);
+
 <input class="visually-hidden" tabindex="-1" type="file" name="image" id="image">
 <button class="eighth-column_icon eighth-column_icon-img" data-pic="url"></button>
 ------------------------------------------
@@ -31,18 +36,6 @@ image: "image/6300524222.jpg"
 <input type="hidden" name="imagesave">
 <div class="wrapper-preview">
     <img class="preview">
-</div>
----------------------------------
-export const openBtnImg = (table) => {
-    table.addEventListener('click', (e) => {
-        const target = e.target;
-        const btnImg = target.closest('.eighth-column_icon-img');
-        if (btnImg) {
-            let goodImg = btnImg.dataset.pic;
-            console.log('goodImg: ', goodImg);
-            goodImg = open('img/телефон-Xiomi.jpg', '', 'width=600, height=600');
-            goodImg.moveTo(screen.width / 2 - 300, screen.height / 2 - 300);
-        };
-    });
-};
-*/
+</div>*/
+
+

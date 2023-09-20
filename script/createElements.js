@@ -129,7 +129,7 @@ export const createRow = (good) => {
     btnNoImg.classList.add('eighth-column_icon', 'eighth-column_icon-no-img');
     const btnImg = document.createElement('button');
     btnImg.classList.add('eighth-column_icon', 'eighth-column_icon-img');
-    btnImg.dataset.pic = 'img/телефон-Xiomi.jpg';
+    btnImg.dataset.pic = `${good.image}`;
     const btnEdit = document.createElement('button');
     btnEdit.classList.add('eighth-column_icon', 'eighth-column_icon-edit');
     const btnDel = document.createElement('button');
@@ -235,7 +235,8 @@ export const createForm = () => {
                 <label class="box__label-img">
                     <span class="box__label-img-span" >Добавить изображение</span>
                     <input class="box__file visually-hidden" type="file" name="image" accept="image/jpg" tabindex="-1">
-                </label>
+                    <input type="hidden" name="imagesave">
+                    </label>
                 <div class="box__img">
                     <img class="box__img-img" alt="Изображение товара">
                     <img class="box__img-no-img visually-hidden">

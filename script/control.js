@@ -37,6 +37,7 @@ export const closeModal = () => {
     const form = document.querySelector('.form');
     overlay.classList.remove('is-visible');
     formReset(form);
+    form.imagesave.value = '';
     hidePreview();
 };
 
@@ -94,8 +95,7 @@ export const formControl = (form, table) => {
             newGood.image = await toBase64(newGood.image);
         } else {
             delete newGood.image;
-        }
-
+        };
 
         const editingId = form.querySelector('.modal__title-id').textContent?.trim();;
 
@@ -107,7 +107,6 @@ export const formControl = (form, table) => {
 
                 rows.forEach(tr => {
                     const trId = tr.querySelector('.table__content-column-first')?.textContent?.trim();
-
                     if (trId === editingId) {
                         renderEditingRow(tr, receivedGood);
                     }
@@ -153,6 +152,7 @@ const fillForm = (good, form) => {
     form.discount.value = discount;
     form.price.value = price;
     form.units.value = units;
+    form.imagesave.value = image;
     showPreview(`${API_URL}${image}`)
 };
 

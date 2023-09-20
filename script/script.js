@@ -5,7 +5,7 @@ import sortRows from "./sorting.js";
 import { calculateTotalSum } from "./utilities.js";
 import { getData } from "./data.js";
 import editRow from "./editing.js";
-import showImage from "./preview.js";
+import showImage from "./showImg.js";
 
 {
     const init = async (selectorApp) => {
