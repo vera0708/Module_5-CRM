@@ -25,7 +25,7 @@ export const createUpperLine = () => {
     pText.textContent = 'Итоговая стоимость:';
     const pSum = document.createElement('p');
     pSum.classList.add('main-table__total-info__sum');
-    pSum.textContent = '$ 900.00';
+    pSum.textContent = '$ 0';
 
     totalInfo.append(pText, pSum);
 
@@ -230,7 +230,7 @@ export const createForm = () => {
                     <input class="box__input" type="number" name="price">
                 </label>
                 <div class="box__img-notice">
-                    <p class="form__img-notice__text">Изображение не должно превышать размер 1 Мб</p>
+                    <p class="form__img-notice__text visually-hidden">Изображение не должно превышать размер 1 Мб</p>
                 </div>
                 <label class="box__label-img">
                     <span class="box__label-img-span" >Добавить изображение</span>
@@ -260,7 +260,7 @@ export const createForm = () => {
     formText.classList.add('main-table_total-info__text');
     formText.textContent = 'Итоговая стоимость:';
     const formSum = document.createElement('p');
-    formSum.classList.add('main-table__total-info__sum');
+    formSum.classList.add('main-table__total-info__sum', 'form__total-sum');
     formSum.textContent = `$ 0`;
 
     totalFormInfo.append(formText, formSum);

@@ -1,6 +1,6 @@
 import { addGoodPage, editGood, getCategory, postGood } from "./data.js";
 import { renderEditingRow } from "./renders.js";
-import { calculateTotalSum, toBase64 } from "./utilities.js";
+import { calculateTotalSum, currencyFormatRUB, toBase64 } from "./utilities.js";
 import { createModalError } from "./createElements.js";
 import { API_URL } from "./const.js";
 
@@ -35,9 +35,11 @@ export const openModal = (good = null) => {
 export const closeModal = () => {
     const overlay = document.querySelector('.modal-overlay');
     const form = document.querySelector('.form');
+    const formSum = form.querySelector('.form__total-sum');
     overlay.classList.remove('is-visible');
     formReset(form);
     form.imagesave.value = '';
+    formSum.textContent = '0';
     hidePreview();
 };
 
@@ -47,8 +49,20 @@ const formReset = (form) => {
     adjustForm(form);
 };
 
+const updateCategory = async () => {
+    category.textContent = '';
+    const categoryList = await getCategory();
+    console.log('categoryList: ', categoryList);
+    const categoryOption = categoryList.map(categ => {
+        const option = document.createElement('option');
+        option.value = categ;
+        return option;
+    });
+    category.append(...categoryOption);
+};
+
 export const formControl = (form, table) => {
-    const formSum = form.querySelector('.main-table__total-info__sum');
+    const formSum = form.querySelector('.form__total-sum');
     const priceAddedGood = form.querySelector("input[name='price']");
     const countAddedGood = form.querySelector("input[name='count']");
     const discountAddedGood = form.querySelector("input[name='discount']");
@@ -153,7 +167,9 @@ const fillForm = (good, form) => {
     form.price.value = price;
     form.units.value = units;
     form.imagesave.value = image;
-    showPreview(`${API_URL}${image}`)
+    showPreview(`${API_URL}${image}`);
+    const formSum = document.querySelector('.form__total-sum');
+    formSum.textContent = currencyFormatRUB(+`${count * price}`);
 };
 
 const adjustModalTexts = (editingGood, form) => {
@@ -167,7 +183,6 @@ const adjustForm = (form, editingGood = null) => {
     const texts = {
         title: !!editingGood ? changeGood : createGood,
         id: !!editingGood ? editingGood.id : '',
-        // image:  ?   :   ,
     };
 
     const titleForm = document.querySelector('.modal__title');
@@ -180,13 +195,16 @@ const adjustForm = (form, editingGood = null) => {
     btnSubmitForm.textContent = texts.title;
 
     const idText = document.querySelector('.modal__title-text');
+    const btnChangeImg = document.querySelector('.box__label-img-span');
 
     if (!!editingGood) {
         idText.classList.remove('visually-hidden');
         idText.classList.add('is-visible');
+        btnChangeImg.textContent = 'Изменить изображение';
     } else {
         idText.classList.add('visually-hidden');
         idText.classList.remove('is-visible');
+        btnChangeImg.textContent = 'Добавить изображение';
     }
 };
 export const openModalControl = (overlay, btnOpenForm) => {
@@ -225,27 +243,22 @@ export const previewImage = (form) => {
     // const imageFile = form.image;
     const imageFile = document.querySelector('[name="image"]');
     imageFile.addEventListener('change', async () => {
-        console.log('imageFile.files: ', imageFile.files);
         if (imageFile.files.length) {
-            console.log(imageFile.files[0]);
-            /*  name: "unsplash_WHPsxhB4mWQ.png"
-                size: 68219
-                type: "image/png"
-                webkitRelativePath: ""             */
-            const src = await toBase64(imageFile.files[0]);
-            showPreview(src);
+            console.log(imageFile.files[0].size);
+            const noticeText = document.querySelector('.form__img-notice__text');
+            if (imageFile.files[0].size > 1000000) {
+                noticeText.classList.remove('visually-hidden');
+                noticeText.classList.add('is-visible');
+            } else {
+                noticeText.classList.add('visually-hidden');
+                noticeText.classList.remove('is-visible');
+                /*  name: "unsplash_WHPsxhB4mWQ.png"
+    size: 68219
+    type: "image/png"
+    webkitRelativePath: ""             */
+                const src = await toBase64(imageFile.files[0]);
+                showPreview(src);
+            }
         }
     });
-};
-
-const updateCategory = async () => {
-    category.textContent = '';
-    const categoryList = await getCategory();
-    /*console.log('categoryList: ', categoryList);
-     const categoryOption = categoryList.map(categ => {
-         const option = document.createElement('option');
-         option.value = categ;
-         return option;
-     });*/
-    // category.append(...categoryOption);
 };
