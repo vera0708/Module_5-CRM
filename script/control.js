@@ -1,6 +1,6 @@
 import { addGoodPage, editGood, getCategory, postGood } from "./data.js";
 import { renderEditingRow } from "./renders.js";
-import { calculateTotalSum, currencyFormatRUB, toBase64 } from "./utilities.js";
+import { calculateTotalSum, currencyFormatRUB, onlyNumbers, onlyRusLetter, onlyRusLetterSpace, toBase64 } from "./utilities.js";
 import { createModalError } from "./createElements.js";
 import { API_URL } from "./const.js";
 
@@ -52,7 +52,6 @@ const formReset = (form) => {
 const updateCategory = async () => {
     category.textContent = '';
     const categoryList = await getCategory();
-    console.log('categoryList: ', categoryList);
     const categoryOption = categoryList.map(categ => {
         const option = document.createElement('option');
         option.value = categ;
@@ -66,7 +65,19 @@ export const formControl = (form, table) => {
     const priceAddedGood = form.querySelector("input[name='price']");
     const countAddedGood = form.querySelector("input[name='count']");
     const discountAddedGood = form.querySelector("input[name='discount']");
+    const inputName = form.querySelector('input[name="title"]');
+    const inputCategory = form.querySelector('input[name="category"]');
+    const inputDescription = form.querySelector('textarea[name="description"]');
+    const inputUnit = form.querySelector('input[name="units"]');
     updateCategory();
+
+    onlyNumbers(priceAddedGood);
+    onlyNumbers(countAddedGood);
+    onlyNumbers(discountAddedGood);
+    onlyRusLetterSpace(inputName);
+    onlyRusLetterSpace(inputCategory);
+    onlyRusLetterSpace(inputDescription);
+    onlyRusLetter(inputUnit);
 
     priceAddedGood.addEventListener('input', () => {
         sumGoodSum();
@@ -102,6 +113,7 @@ export const formControl = (form, table) => {
         e.preventDefault();
         const formData = new FormData(e.target);
         const newGood = Object.fromEntries(formData);
+        console.log(newGood);
 
         if (newGood.image.size > 1000000) {
             console.log('image.size больше 1 Мб: ', newGood.image.size);
@@ -253,9 +265,9 @@ export const previewImage = (form) => {
                 noticeText.classList.add('visually-hidden');
                 noticeText.classList.remove('is-visible');
                 /*  name: "unsplash_WHPsxhB4mWQ.png"
-    size: 68219
-    type: "image/png"
-    webkitRelativePath: ""             */
+                    size: 68219
+                    type: "image/png"
+                    webkitRelativePath: ""             */
                 const src = await toBase64(imageFile.files[0]);
                 showPreview(src);
             }
