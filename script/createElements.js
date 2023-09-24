@@ -203,7 +203,7 @@ export const createForm = () => {
 
                 <label class="box__label box__label-units">
                     <span class="box__span">Единицы измерения</span>
-                    <input class="box__input" type="text" name="units">
+                    <input class="box__input" type="text" name="units" required>
                 </label>
 
                 <fieldset class="box__fieldset-discount">
@@ -219,15 +219,15 @@ export const createForm = () => {
 
                 <label class="box__label box__label-description">
                     <span class="box__span">Описание</span>
-                    <textarea class="box__text" name="description"></textarea>
+                    <textarea class="box__text" name="description" required></textarea>
                 </label>
                 <label class="box__label box__label-count">
                     <span class="box__span">Количество</span>
-                    <input class=" box__input" type="number" name="count">
+                    <input class=" box__input" type="number" name="count" required>
                 </label>
                 <label class="box__label box__label-price">
                     <span class="box__span">Цена</span>
-                    <input class="box__input" type="number" name="price">
+                    <input class="box__input" type="number" name="price" required>
                 </label>
                 <div class="box__img-notice">
                     <p class="form__img-notice__text visually-hidden">Изображение не должно превышать размер 1 Мб</p>

@@ -1,6 +1,6 @@
 import { addGoodPage, editGood, getCategory, postGood } from "./data.js";
 import { renderEditingRow } from "./renders.js";
-import { calculateTotalSum, currencyFormatRUB, onlyNumbers, onlyRusLetter, onlyRusLetterSpace, toBase64 } from "./utilities.js";
+import { calculateTotalSum, currencyFormatRUB, min80RusLetterSpace, onlyNumbers, onlyRusLetter, onlyRusLetterSpace, toBase64 } from "./utilities.js";
 import { createModalError } from "./createElements.js";
 import { API_URL } from "./const.js";
 
@@ -76,7 +76,7 @@ export const formControl = (form, table) => {
     onlyNumbers(discountAddedGood);
     onlyRusLetterSpace(inputName);
     onlyRusLetterSpace(inputCategory);
-    onlyRusLetterSpace(inputDescription);
+    min80RusLetterSpace(inputDescription);
     onlyRusLetter(inputUnit);
 
     priceAddedGood.addEventListener('input', () => {

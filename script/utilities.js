@@ -18,17 +18,24 @@ export const onlyNumbers = (inputName) => {
     });
 };
 
+export const onlyRusLetter = (inputName) => {
+    inputName.addEventListener('input', () => {
+        inputName.value = inputName.value.replace(/[^А-ЯЁ]/ig, '');
+    });
+};
+
 export const onlyRusLetterSpace = (inputName) => {
     inputName.addEventListener('input', () => {
         inputName.value = inputName.value.replace(/[^А-ЯЁ ]/gi, '');
     });
 };
 
-export const onlyRusLetter = (inputName) => {
+export const min80RusLetterSpace = (inputName) => {
     inputName.addEventListener('input', () => {
-        inputName.value = inputName.value.replace(/[^А-ЯЁ]/ig, '');
+        inputName.value = inputName.value.replace(/^[А-ЯЁ ]{80,}$/ / gi, '');
     });
 };
+
 export const toBase64 = (file) => {
     return new Promise((resolve, reject) => {
         // функции resolve и reject создаёт сам JS
