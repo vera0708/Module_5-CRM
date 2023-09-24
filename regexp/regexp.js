@@ -36,9 +36,9 @@ console.log('Текст в скобках: ', match3);
 const str4 = 'На сайте  http://site.com размещена http:информация о сайте http://site.ru. Не обязательно http:site должен быть';
 console.log('Исходная строка: ', str4);
 
-const task4 = /(http?:\/\/[A-z0-9]{2,}\.[A-z]{2,})/gm;
+const task4 = /((http?:\/\/)([A-z0-9]{2,}\.[A-z]{2,}))/gm;
 const match4 = str4.match(task4, '*');
 console.log('match4: ', match4);
 
-const replace1 = str4.replace(task4, '<a href="$&">site.ru</a>');
+const replace1 = str4.replace(task4, '<a href="$&">$3</a>');
 console.log('Строка с заменой: ', replace1);
